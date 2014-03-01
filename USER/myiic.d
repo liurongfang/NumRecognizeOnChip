@@ -1,0 +1,9 @@
+myiic.o: ..\HARDWARE\24CXX\myiic.c
+myiic.o: ..\HARDWARE\24CXX\myiic.h
+myiic.o: ..\SYSTEM\sys\sys.h
+myiic.o: ..\SYSTEM\sys\stm32f10x_map.h
+myiic.o: ..\SYSTEM\sys\stm32f10x_conf.h
+myiic.o: ..\SYSTEM\sys\stm32f10x_type.h
+myiic.o: ..\SYSTEM\sys\cortexm3_macro.h
+myiic.o: ..\SYSTEM\sys\stm32f10x_nvic.h
+myiic.o: ..\SYSTEM\delay\delay.h

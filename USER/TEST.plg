@@ -1,0 +1,92 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Project:</h2>
+E:\STM32\NumRecognize\USER\TEST.uvproj
+Project File Date:  02/24/2014
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling test.c...
+test.c(101): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c(46): warning:  #177-D: variable "j" was declared but never referenced
+test.c:         u8 i,j;
+test.c:              ^
+test.c: test.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 2 Warning(s).
+compiling test.c...
+test.c(101): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c(46): warning:  #177-D: variable "j" was declared but never referenced
+test.c:         u8 i,j;
+test.c:              ^
+test.c: test.c: 2 warnings, 0 errors
+test.c - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(101): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c(46): warning:  #177-D: variable "j" was declared but never referenced
+test.c:         u8 i,j;
+test.c:              ^
+test.c: test.c: 2 warnings, 0 errors
+test.c - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(101): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c(46): warning:  #177-D: variable "j" was declared but never referenced
+test.c:         u8 i,j;
+test.c:              ^
+test.c: test.c: 2 warnings, 0 errors
+test.c - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(101): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c(46): warning:  #177-D: variable "j" was declared but never referenced
+test.c:         u8 i,j;
+test.c:              ^
+test.c: test.c: 2 warnings, 0 errors
+test.c - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=29244 RO-data=3528 RW-data=376 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(101): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c(46): warning:  #177-D: variable "j" was declared but never referenced
+test.c:         u8 i,j;
+test.c:              ^
+test.c: test.c: 2 warnings, 0 errors
+test.c - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
