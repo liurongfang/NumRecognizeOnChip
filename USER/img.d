@@ -1,4 +1,5 @@
 img.o: img.c
+img.o: D:\Program Files (x86)\KeiluV4\ARM\RV31\INC\math.h
 img.o: img.h
 img.o: base.h
 img.o: D:\Program Files (x86)\KeiluV4\ARM\RV31\INC\stdio.h

@@ -28,10 +28,12 @@
 #define NUM 5
 #define TZ  13
 
-#define THRES 60  	  
+#define THRES 40  	  
 
 extern u8 ov_sta;	//在exit.c里面定义，状态
 extern u8 ov_frame;	//在timer.c里面定义，帧率
+
+u8 thres = 60;
 
 		 
 u16 system_init(void);		//系统启动时的初始化
@@ -43,7 +45,7 @@ void ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num);		//在
 //主函数	  
 int main(void)
 {	
-	u8 i,j;
+	u8 i;
 	//u8 **img_t = alloc_mem2d_u8( IMG_H, IMG_H);
 	u8 **img = alloc_mem2d_u8( IMG_H, IMG_W);
 	u8 **tz = alloc_mem2d_u8( NUM, TZ);
@@ -86,13 +88,23 @@ int main(void)
 
 	LCD_ShowString(40,50,200,200,16,"Continue...");
 
+	thres  = GlobalThreshold(img, IMG_H, IMG_W)>>1;		//经验值，阈值的1/2分离较好
+	printf("galobal thres:%d", thres);
+//	thres = otsuThreshold(img, IMG_H, IMG_W);
+//	printf("ostu thres:%d", thres);
 	img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1);  //显示在屏幕中间
 	print2serial(img, IMG_H, IMG_W);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
 
 
 	//图像处理
 	//ImageHandle(tz, img, IMG_H, IMG_W, NUM);
-	while(KEY1!=0);
+	//while(KEY1 == 0);
 	goto back;
 
 
@@ -210,9 +222,14 @@ void camera_refresh(u8 **img, u16 yScale, u16 xScale)
 				color= color_y + color_u + color_v;  		//显示
 								 	 
 				LCD_WR_DATA(color);
-				img[i/yScale][j/xScale] = color_gray;	//送到图像数组，上到下，左到右存储,加1减1是补偿精度，否则img[IMG_H-1]这一行没有 
+				if (i != 319)	   //测试发现第319行全是白色的，不知道怎么回事，所以就不要了，用318行的代替
+				{
+					img[i/yScale][j/xScale] = color_gray;	//送到图像数组，上到下，左到右存储,加1减1是补偿精度，否则img[IMG_H-1]这一行没有
+				}
+				//if (i >316) printf("c%d:%d ",i,color_gray);  //测试用
 			} 
 		}
+		//printf("#\n");		   //测试用
 
  		OV7670_CS=1; 		//关闭片选使能					 
 		OV7670_RCK=0; 
@@ -247,7 +264,7 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y)
 		LCD_SetCursor(x, y+i);	//设置光标位置 
 		LCD_WriteRAM_Prepare();     //开始写入GRAM
 
-//		for (j = 0; j<width; j++)
+//		for (j = 0; j<width; j++)	   //原图缩小显示
 //		{
 //			//将gray复制三份给RGB565，低位舍掉
 //			color = img[i][j]>>3;		//移掉三位，给R,6位
@@ -259,9 +276,10 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y)
 //			LCD_WR_DATA(color);
 //		}
 
-		for (j = 0; j<width; j++)
+
+		for (j = 0; j<width; j++)	   //二值化显示
 		{
-			if (img[i][j] > THRES)
+			if (img[i][j] > thres)
 			{
 				color = 0xffff;
 			}
@@ -287,8 +305,8 @@ void print2serial(u8 **img, u16 height, u16 width)
 	{
 		for (j = 0; j<width; j++)
 		{
-			printf("%d ",img[i][j]);
-			//printf("%d",img[i][j]>THRES?1:0);	 //二值化
+			//printf("%d ",img[i][j]);
+			printf("%d",img[i][j]>thres?1:0);	 //二值化
 			//printf("%x",img[i][j]>100?1:0);
 		}
 		printf("\n");

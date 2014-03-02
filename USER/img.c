@@ -5,6 +5,7 @@
 *	联系作者请发邮件至：752444247@qq.com
 **************************************************************************************/
 
+#include <math.h>
 #include "img.h"
 #include "usart.h"
 #include "usmart.h"
@@ -748,6 +749,190 @@ u16 BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u16 thres)
 
 	return 0;
 }
+
+//全局阈值函数
+//给定一个初始阈值T，在T两边分别计算平均阈值T1和T2，不等，T=(T1+T2)/2，知道两边的平均阈值相等
+u8 GlobalThreshold(u8 **img, u16 height, u16 width)
+{
+	u8 pg[256] = {0};		 //直方图数组
+	u16 i,j,t=0,t1,t2,k1,k2;
+	double u=0,u1,u2;
+
+	//for (i = 0; i<256; i++) pg[i]=0;
+	for (i = 0; i<height; i++) //直方图统计
+	{
+		for (j = 0; j<width; j++)
+		{
+			pg[ img[i][j] ]++;
+		}
+	}
+			
+
+	
+	for (i=0;i<256;i++)
+	{
+		t += pg[i];			  //计算被统计的像素点数目
+		u += i * pg[i];		  //第i阶灰度值*第i阶像素数目
+	}
+	k2 = (u16 )( u/t); //计算被统计像素点灰度的平均值，初始灰度值
+	
+	do {
+		k1 = k2;
+		t1 = 0; u1 = 0;
+		for (i = 0; i<=k1; i++)	   //类似前面，计算低灰度组的累加值
+		{
+			t1 += pg[i];		 //计算低灰度组被统计的像素点数目
+			u1 += i * pg[i];
+		}
+
+		t2 = t - t1;		   //得到高灰度组的像素点数目
+		u2 = u - u1;		   //得到高灰度组的加权灰度
+
+		if (t1)
+			u1=u1/t1; 	//计算低灰度组的平均值
+		else
+			u1=0;
+
+		if (t2)
+			u2=u2/t2;	//计算高灰度组的平均值
+		else
+			u2=0;
+
+		k2 = (u16 )((u1 + u2)/2 );	//计算新的阈值
+	}while( k1 != k2);		//如果数值未稳定，继续
+
+	return k1;
+}
+
+//OSTU求图像的阈值
+u8 otsuThreshold(u8 **img, u16 height, u16 width)
+{
+//	int width = frame->width;
+//	int height = frame->height;
+	u16 pixelCount[256];
+	float pixelPro[256];
+	u16 i, j, pixelSum = width * height, threshold = 0;
+	//遍历灰度级[0,255]
+	float w0, w1, u0tmp, u1tmp, u0, u1, u, deltaTmp, deltaMax = 0;
+	//u8* data = (uchar*)frame->imageData;
+
+	for(i = 0; i < 256; i++)
+	{
+		pixelCount[i] = 0;
+		pixelPro[i] = 0;
+	}
+
+	//统计灰度级中每个像素在整幅图像中的个数
+	for(i = 0; i < height; i++)
+	{
+		for(j = 0;j < width;j++)
+		{
+			pixelCount[ img[i][j] ]++;
+		}
+	}
+	
+	//计算每个像素在整幅图像中的比例
+	for(i = 0; i < 256; i++)
+	{
+		pixelPro[i] = (float)pixelCount[i] / pixelSum;
+	}
+
+	for(i = 0; i < 256; i++)
+	{
+		w0 = w1 = u0tmp = u1tmp = u0 = u1 = u = deltaTmp = 0;
+		for(j = 0; j < 256; j++)
+		{
+			if(j <= i)   //背景部分
+			{
+				w0 += pixelPro[j];
+				u0tmp += j * pixelPro[j];
+			}
+			else   //前景部分
+			{
+				w1 += pixelPro[j];
+				u1tmp += j * pixelPro[j];
+			}
+		}
+		u0 = u0tmp / w0;
+		u1 = u1tmp / w1;
+		u = u0tmp + u1tmp;
+		deltaTmp = w0 * pow((u0 - u), 2) + w1 * pow((u1 - u), 2);
+		if(deltaTmp > deltaMax)
+		{
+			deltaMax = deltaTmp;
+			threshold = i;
+		}
+	}
+
+	return threshold;
+}
+
+//去除图像中的孤立像素块
+//void RemoveSepartBlock(u8 **img, u16 height, u16 width, u16 x, u16 y, bool lab, DPoint visted[],u16 lianxushu)
+//{
+//	u16 i,j,count;
+//
+//	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
+//	{
+//		return TRUE;
+//	}
+//	else
+//	{
+//		g_lianxushu++;			//长度加1
+//		lab[y*height+x] = TRUE;				   //置访问标志
+//		visted[g_lianxushu - 1].x = x;		   //记录下当前坐标
+//		visted[g_lianxushu - 1].y = y;
+//	}
+//	
+//	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
+//	{
+//		return TRUE;
+//	}
+//	else							//进入递归,8方向遍历
+//	{
+//		if ( (x-1) >= 0 && (y-1) >= 0)
+//		{
+//			if (img[x-1][y-1] == 0)		//左上角
+//				RemoveSepartBlock(img, height, width, x-1, y-1, lab, visted[], lianxushu);
+//		}
+//
+//		if ( (y-1) >= 0)
+//		{
+//			if (img[x][y-1] == 0)		//上
+//				RemoveSepartBlock(img, height, width, x, y-1, lab, visted[], lianxushu);
+//	
+//			if (img[x+1][y-1] == 0)		//右上角
+//				RemoveSepartBlock(img, height, width, x+1, y-1, lab, visted[], lianxushu);
+//		}
+//
+//		if ( (x-1) >= 0)
+//		{
+//			if (img[x-1][y] == 0)		//左
+//				RemoveSepartBlock(img, height, width, x-1, y, lab, visted[], lianxushu);
+//
+//			if (img[x-1][y+1] == 0)		//左下角
+//			RemoveSepartBlock(img, height, width, x-1, y+1, lab, visted[], lianxushu);
+//		}
+//
+//		if (img[x+1][y] == 0)		//右
+//			RemoveSepartBlock(img, height, width, x+1, y, lab, visted[], lianxushu);
+//
+//
+//		if (img[x][y+1] == 0)		//下
+//			RemoveSepartBlock(img, height, width, x, y+1, lab, visted[], lianxushu);
+//
+//		if (img[x+1][y+1] == 0)		//右下角
+//			RemoveSepartBlock(img, height, width, x+1, y+1, lab, visted[], lianxushu);
+//
+//		if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
+//		{
+//			return TRUE;
+//		} 
+//	}
+//
+//	return FALSE;
+//}
+
 
 
 

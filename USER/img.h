@@ -32,6 +32,12 @@ typedef struct Rct
 	// u16 righttopY;
 }DRect;
 
+typedef struct Pot
+{
+	u16 x;
+	u16 y;
+}DPoint;
+
 
 //建立矩形链表单元
 typedef struct rectLink
@@ -87,7 +93,11 @@ u16 SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag);
 //将图像二值化
 u16 BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth,  u16 thres);
 
+//计算图像的全局阈值
+u8 GlobalThreshold(u8 **img, u16 height, u16 width);
 
+//OSTU求图像的阈值
+u8 otsuThreshold(u8 **img, u16 height, u16 width);
 
 
 #endif

@@ -12,7 +12,7 @@
 //…Í«Î2Œ¨ucharƒ⁄¥Ê
 u8 **alloc_mem2d_u8( u16 height, u16 width)
 {
-	u16 i,j;
+	u16 i;
 	u8 **p = NULL;
 
 	//LCD_ShowString(40,50,200,200,16,"start malloc...");

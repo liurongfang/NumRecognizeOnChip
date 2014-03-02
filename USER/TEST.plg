@@ -7,86 +7,214 @@ E:\STM32\NumRecognize\USER\TEST.uvproj
 Project File Date:  02/24/2014
 
 <h2>Output:</h2>
-Build target 'Target 1'
 compiling test.c...
-test.c(101): warning:  #111-D: statement is unreachable
+test.c(113): warning:  #111-D: statement is unreachable
 test.c:         LCD_Fill(1,1,239,200,WHITE);
 test.c:         ^
-test.c(46): warning:  #177-D: variable "j" was declared but never referenced
-test.c:         u8 i,j;
-test.c:              ^
-test.c: test.c: 2 warnings, 0 errors
-linking...
-Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
-FromELF: creating hex file...
-"TEST.axf" - 0 Error(s), 2 Warning(s).
-compiling test.c...
-test.c(101): warning:  #111-D: statement is unreachable
-test.c:         LCD_Fill(1,1,239,200,WHITE);
-test.c:         ^
-test.c(46): warning:  #177-D: variable "j" was declared but never referenced
-test.c:         u8 i,j;
-test.c:              ^
-test.c: test.c: 2 warnings, 0 errors
-test.c - 0 Error(s), 2 Warning(s).
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+compiling img.c...
+img.c(875): error:  #20: identifier "g_lianxushu" is undefined
+img.c:          if(g_lianxushu >= lianxushu)    //如果连续长度满足要求，返回
+img.c:             ^
+img.c(877): error:  #118: a void function may not return a value
+img.c:                  return TRUE;
+img.c:                         ^
+img.c(882): error:  #142: expression must have pointer-to-object type
+img.c:                  lab[y*height+x] = TRUE;                            //置访问标志
+img.c:                      ^
+img.c(889): error:  #118: a void function may not return a value
+img.c:                  return TRUE;
+img.c:                         ^
+img.c(896): error:  #29: expected an expression
+img.c:                                  RemoveSepartBlock(img, height, width, x-1, y-1, lab, visted[], lianxushu);
+img.c:                                                                                              ^
+img.c(902): error:  #29: expected an expression
+img.c:                                  RemoveSepartBlock(img, height, width, x, y-1, lab, visted[], lianxushu);
+img.c:                                                                                            ^
+img.c(905): error:  #29: expected an expression
+img.c:                                  RemoveSepartBlock(img, height, width, x+1, y-1, lab, visted[], lianxushu);
+img.c:                                                                                              ^
+img.c(911): error:  #29: expected an expression
+img.c:                                  RemoveSepartBlock(img, height, width, x-1, y, lab, visted[], lianxushu);
+img.c:                                                                                            ^
+img.c(914): error:  #29: expected an expression
+img.c:                          RemoveSepartBlock(img, height, width, x-1, y+1, lab, visted[], lianxushu);
+img.c:                                                                                      ^
+img.c(918): error:  #29: expected an expression
+img.c:                          RemoveSepartBlock(img, height, width, x+1, y, lab, visted[], lianxushu);
+img.c:                                                                                    ^
+img.c(922): error:  #29: expected an expression
+img.c:                          RemoveSepartBlock(img, height, width, x, y+1, lab, visted[], lianxushu);
+img.c:                                                                                    ^
+img.c(925): error:  #29: expected an expression
+img.c:                          RemoveSepartBlock(img, height, width, x+1, y+1, lab, visted[], lianxushu);
+img.c:                                                                                      ^
+img.c(929): error:  #118: a void function may not return a value
+img.c:                          return TRUE;
+img.c:                                 ^
+img.c(933): error:  #118: a void function may not return a value
+img.c:          return FALSE;
+img.c:                 ^
+img.c(873): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:              ^
+img.c(873): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                ^
+img.c(873): warning:  #177-D: variable "count" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                  ^
+img.c: img.c: 3 warnings, 14 errors
+Target not created
+compiling img.c...
+img.c - 0 Error(s), 0 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+Program Size: Code=33388 RO-data=3672 RW-data=384 ZI-data=20088  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling test.c...
-test.c(101): warning:  #111-D: statement is unreachable
+test.c(113): warning:  #111-D: statement is unreachable
 test.c:         LCD_Fill(1,1,239,200,WHITE);
 test.c:         ^
-test.c(46): warning:  #177-D: variable "j" was declared but never referenced
-test.c:         u8 i,j;
-test.c:              ^
-test.c: test.c: 2 warnings, 0 errors
-test.c - 0 Error(s), 2 Warning(s).
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+Program Size: Code=33388 RO-data=3672 RW-data=384 ZI-data=20088  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling test.c...
-test.c(101): warning:  #111-D: statement is unreachable
+test.c(113): warning:  #111-D: statement is unreachable
 test.c:         LCD_Fill(1,1,239,200,WHITE);
 test.c:         ^
-test.c(46): warning:  #177-D: variable "j" was declared but never referenced
-test.c:         u8 i,j;
-test.c:              ^
-test.c: test.c: 2 warnings, 0 errors
-test.c - 0 Error(s), 2 Warning(s).
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+Program Size: Code=33388 RO-data=3672 RW-data=384 ZI-data=20088  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling test.c...
-test.c(101): warning:  #111-D: statement is unreachable
+test.c(113): warning:  #111-D: statement is unreachable
 test.c:         LCD_Fill(1,1,239,200,WHITE);
 test.c:         ^
-test.c(46): warning:  #177-D: variable "j" was declared but never referenced
-test.c:         u8 i,j;
-test.c:              ^
-test.c: test.c: 2 warnings, 0 errors
-test.c - 0 Error(s), 2 Warning(s).
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=29244 RO-data=3528 RW-data=376 ZI-data=20088  
+Program Size: Code=33388 RO-data=3672 RW-data=384 ZI-data=20088  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling test.c...
-test.c(101): warning:  #111-D: statement is unreachable
+test.c(113): warning:  #111-D: statement is unreachable
 test.c:         LCD_Fill(1,1,239,200,WHITE);
 test.c:         ^
-test.c(46): warning:  #177-D: variable "j" was declared but never referenced
-test.c:         u8 i,j;
-test.c:              ^
-test.c: test.c: 2 warnings, 0 errors
-test.c - 0 Error(s), 2 Warning(s).
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=29232 RO-data=3528 RW-data=376 ZI-data=20088  
+Program Size: Code=33432 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33432 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33460 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33432 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33460 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33464 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33440 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33452 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33440 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling test.c...
+test.c(113): warning:  #111-D: statement is unreachable
+test.c:         LCD_Fill(1,1,239,200,WHITE);
+test.c:         ^
+test.c: test.c: 1 warning, 0 errors
+test.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33436 RO-data=3672 RW-data=384 ZI-data=20088  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
