@@ -64,7 +64,7 @@ u16 DeRectLink(RectLink *head);
 void ShowRectLink(RectLink *rlink);
 
 //粗略分离出字符所在的矩形区域
-void DetectRect(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, DRect *rect);
+DRect DetectRect(u8 **Src, u16 srcHeight, u16 srcWidth);
 
 //倾斜度矫正
 void SlopeAdjust(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth);
@@ -73,7 +73,7 @@ void SlopeAdjust(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth);
 u16 StdAlignImg(u8 **Dst, u8 **Src, u16 dstHeight, u16 dstWidth, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 num);
 
 //标准化图像
-u16 StandardImg(u8 **Dst, u8 **Src, DRect dstRect, DRect srcRect);
+u16 CopyImg(u8 **Dst, u8 **Src, DRect dstRect, DRect srcRect);
 
 //特征提取，13个特征
 u16 TZTQ13(u8 **tz, u8 **Src, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 num);
@@ -88,10 +88,10 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 void InvertImg(u8 **Dst, u8 **Src , u16 srcHeight, u16 srcWidth);
 
 //将图像的像素值全部置为tag
-u16 SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag);
+void SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag);
 
 //将图像二值化
-u16 BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth,  u16 thres);
+void BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u8 thres);
 
 //计算图像的全局阈值
 u8 GlobalThreshold(u8 **img, u16 height, u16 width);
@@ -99,6 +99,11 @@ u8 GlobalThreshold(u8 **img, u16 height, u16 width);
 //OSTU求图像的阈值
 u8 otsuThreshold(u8 **img, u16 height, u16 width);
 
+//简单填充，有可能会产生新的“孔”
+u16 floodfill(u8 **img, u16 height, u16 width);
+
+//寻找图像中的孤立像素块
+bool FindBlock(u8 **img, u16 height, u16 width, u16 x, u16 y, bool lab[], DPoint visted[],u16 lianxushu);
 
 #endif
 

@@ -2,7 +2,7 @@
 ### Preparing for ADS-LD.
 ### Creating ADS-LD Command Line
 ### List of Objects: adding '"stm32f10x.o"'
-### List of Objects: adding '"test.o"'
+### List of Objects: adding '"main.o"'
 ### List of Objects: adding '"img.o"'
 ### List of Objects: adding '"memmgr.o"'
 ### List of Objects: adding '"recog.o"'
@@ -24,14 +24,14 @@
 ### List of Objects: adding '"usmart_config.o"'
 ### List of Objects: adding '"usmart_str.o"'
 ### ADS-LD Command completed:
---cpu Cortex-M3 "stm32f10x.o" "test.o" "img.o" "memmgr.o" "recog.o" "delay.o" "sys.o" "usart.o" "led.o" "key.o" "exti.o" "wdg.o" "timer.o" "ili93xx.o" "24cxx.o" "myiic.o" "touch.o" "ov7670.o" "sccb.o" "usmart.o" "usmart_config.o" "usmart_str.o" --library_type=microlib --strict --scatter "TEST.sct" 
+--cpu Cortex-M3 "stm32f10x.o" "main.o" "img.o" "memmgr.o" "recog.o" "delay.o" "sys.o" "usart.o" "led.o" "key.o" "exti.o" "wdg.o" "timer.o" "ili93xx.o" "24cxx.o" "myiic.o" "touch.o" "ov7670.o" "sccb.o" "usmart.o" "usmart_config.o" "usmart_str.o" --library_type=microlib --strict --scatter "TEST.sct" 
 --autoat --summary_stderr --info summarysizes --map --xref --callgraph --symbols 
 --info sizes --info totals --info unused --info veneers 
  --list ".\TEST.map" -o "TEST.axf"### Preparing Environment (PrepEnvAds)
 ### ADS-LD Output File: 'TEST.axf'
 ### ADS-LD Command File: 'TEST.lnp'
 ### Checking for dirty Components...
-### Creating CmdFile 'TEST.lnp', Handle=0x00000470
+### Creating CmdFile 'TEST.lnp', Handle=0x000001A4
 ### Writing '.lnp' file
 ### ADS-LD Command file 'TEST.lnp' is ready.
 ### ADS-LD: About to start ADS-LD Thread.

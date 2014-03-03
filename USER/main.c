@@ -1,126 +1,89 @@
 
+
 //参考正点原子minStm32开发板摄像头实验代码
 //2014年02月23日
 
-#include "sys.h"
-#include "usart.h"		
-#include "delay.h"	
-#include "led.h" 
-#include "key.h"
-#include "exti.h"
-#include "wdg.h"
-#include "timer.h"
-#include "lcd.h"	  
-#include "ov7670.h"
-#include "usmart.h"
+#include "main.h"
 
-#include "img.h"
-#include "memmgr.h"
-
-//定义LCD屏幕尺寸
-#define LCD_H 320
-#define LCD_W 240
-
-//定义获取图像的尺寸
-#define IMG_H 80
-#define IMG_W 60
-
-#define NUM 5
-#define TZ  13
-
-#define THRES 40  	  
-
-extern u8 ov_sta;	//在exit.c里面定义，状态
-extern u8 ov_frame;	//在timer.c里面定义，帧率
-
-u8 thres = 60;
-
-		 
-u16 system_init(void);		//系统启动时的初始化
-void camera_refresh(u8 **img, u16 yScale, u16 xScale);		//更新LCD显示
-void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y);	//从数组更新图像到LCD
-void print2serial(u8 **img, u16 height, u16 width);			//输出到串口
-void ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num);		//在这里完成图像处理的相关操作
+//测试用，等待6s
+void wait()
+{
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+}
 
 //主函数	  
 int main(void)
 {	
-	u8 i;
-	//u8 **img_t = alloc_mem2d_u8( IMG_H, IMG_H);
-	u8 **img = alloc_mem2d_u8( IMG_H, IMG_W);
-	u8 **tz = alloc_mem2d_u8( NUM, TZ);
+	u8 i = 0;
+	u8 **img =  NULL;
+	u8 **tz = NULL;
 
 	
 	//等待系统启动完成
 	while(system_init());
-		   
-	back:
-	//开始工作						 	 
- 	while(1)
-	{	
- 		camera_refresh(img, 4, 4);	//更新显示	 
-		
- 		if(i != ov_frame)		//DS0闪烁.
-		{
-			i = ov_frame;
-			LED0 = !LED0;
- 		}
-
-		//由于取出的图像是转置后的，这里转置回来
-//		for (i = 0;  i<IMG_H; i++)		//输出到串口
-//		{
-//			for (j = 0; j<IMG_W; j++)
-//			{
-//				//img[i][j] = img_t[j][i];	//转置
-//				printf("%d",img[i][j]>100?1:0);
-//			}
-//			printf("\n");
-//		}
-
-		if (KEY0 == 0)
-		{
-			delay_ms(1000); 		//消抖
-			if (KEY0 == 0)
-				break;
-		}
-	}
 
 
-	LCD_ShowString(40,50,200,200,16,"Continue...");
-
-	thres  = GlobalThreshold(img, IMG_H, IMG_W)>>1;		//经验值，阈值的1/2分离较好
-	printf("galobal thres:%d", thres);
-//	thres = otsuThreshold(img, IMG_H, IMG_W);
-//	printf("ostu thres:%d", thres);
-	img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1);  //显示在屏幕中间
-	print2serial(img, IMG_H, IMG_W);
-	delay_ms(1000);
-	delay_ms(1000);
-	delay_ms(1000);
-	delay_ms(1000);
-	delay_ms(1000);
-	delay_ms(1000);
-
-
-	//图像处理
-	//ImageHandle(tz, img, IMG_H, IMG_W, NUM);
-	//while(KEY1 == 0);
-	goto back;
-
-
-
-	//开始识别
-	LCD_Fill(1,1,239,200,WHITE);
-	POINT_COLOR = BLUE;		//设置提示信息为蓝色
-	LCD_ShowString(40,50,200,200,16,"Start Recognize!");
-	delay_ms(20000);
-	LCD_Fill(1,1,239,319,WHITE);
-
-	//释放内存
-	delete_mem2d_u8( img,IMG_H, IMG_W);
-	delete_mem2d_u8( tz, NUM, TZ);
-	//delete_mem2d_u8( img_t, IMG_H, IMG_H);
+	while(1)
+	{
+		img = alloc_mem2d_u8( IMG_H, IMG_W);
+		tz = alloc_mem2d_u8( NUM, TZ);
+		  
+		//back:
+		//开始工作						 	 
+	 	while(1)
+		{	
+	 		camera_refresh(img, 4, 4);	//更新显示	 
+			
+	 		if(i != ov_frame)		//DS0闪烁.
+			{
+				i = ov_frame;
+				LED0 = !LED0;
+	 		}
 	
+			if (KEY0 == 0)
+			{
+				delay_ms(1000); 		//消抖
+				if (KEY0 == 0)
+					break;
+			}
+		}
+	
+	
+		LCD_ShowString(40,50,200,200,16,"Continue...");
+	
+		thres  = GlobalThreshold(img, IMG_H, IMG_W)>>1;		//经验值，阈值的1/2分离较好
+		printf("galobal thres:%d\r\n", thres);
+//		thres = otsuThreshold(img, IMG_H, IMG_W);
+//		printf("ostu thres:%d", thres);
+//		img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1);  //显示在屏幕中间
+//		print2serial(img, IMG_H, IMG_W);				   //测试用，不可去掉
+	
+		//wait();
+	
+		//图像处理
+		ImageHandle(tz, img, IMG_H, IMG_W, NUM);
+		//while(KEY1 == 0);
+		//goto back;
+	
+	
+	
+//		//开始识别
+//		LCD_Fill(1,1,239,200,WHITE);
+//		POINT_COLOR = BLUE;		//设置提示信息为蓝色
+//		LCD_ShowString(40,50,200,200,16,"Start Recognize!");
+//		delay_ms(20000);
+//		LCD_Fill(1,1,239,319,WHITE);
+	
+		//释放内存
+		delete_mem2d_u8( img,IMG_H, IMG_W);
+		delete_mem2d_u8( tz, NUM, TZ);
+
+	}
 	
 	return 0;	   
 }
@@ -242,7 +205,7 @@ void camera_refresh(u8 **img, u16 yScale, u16 xScale)
 }
 
 //从数组更新图像到LCD
-void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y)
+void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 {
 	u16 i,j;
 	u16 color;
@@ -258,37 +221,66 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y)
 //		LCD_WriteRAM_Prepare();     			//开始写入GRAM	  
 //		for(j=0;j<xlen;j++)LCD_WR_DATA(color);	//设置光标位置 	    
 //	}
-		
-	for (i = 0; i<height; i++)
-	{
-		LCD_SetCursor(x, y+i);	//设置光标位置 
-		LCD_WriteRAM_Prepare();     //开始写入GRAM
 
-//		for (j = 0; j<width; j++)	   //原图缩小显示
-//		{
-//			//将gray复制三份给RGB565，低位舍掉
-//			color = img[i][j]>>3;		//移掉三位，给R,6位
-//			color <<= 6;				//空出6位，存G
-//			color |= img[i][j]>>2;		//6
-//			color <<=5;
-//			color |= img[i][j]>>3;		//5
-//
-//			LCD_WR_DATA(color);
-//		}
-
-
-		for (j = 0; j<width; j++)	   //二值化显示
+	if (mode == 1)
+	{		
+		for (i = 0; i<height; i++)
 		{
-			if (img[i][j] > thres)
+			LCD_SetCursor(x, y+i);	//设置光标位置 
+			LCD_WriteRAM_Prepare();     //开始写入GRAM
+	
+			for (j = 0; j<width; j++)	   //原图缩小显示
 			{
-				color = 0xffff;
+				//将gray复制三份给RGB565，低位舍掉
+				color = img[i][j]>>3;		//移掉三位，给R,6位
+				color <<= 6;				//空出6位，存G
+				color |= img[i][j]>>2;		//6
+				color <<=5;
+				color |= img[i][j]>>3;		//5
+	
+				LCD_WR_DATA(color);
 			}
-			else
+		}
+	}
+	else
+	if (mode == 2)
+	{
+		for (i = 0; i<height; i++)
+		{
+			for (j = 0; j<width; j++)	   //二值化显示
 			{
-				color = 0x0000;
+				if (img[i][j] > thres)
+				{
+					color = 0xffff;
+				}
+				else
+				{
+					color = 0x0000;
+				}
+	
+				LCD_WR_DATA(color);
 			}
-
-			LCD_WR_DATA(color);
+		}
+	}
+	else
+	if (mode == 3)
+	{
+		for (i = 0; i<height; i++)
+		{
+			for (j = 0; j<width; j++)	   //二值化显示
+			{
+				if (img[i][j] == 1)
+				{
+					color = 0xffff;
+				}
+				else
+				if (img[i][j] == 0)
+				{
+					color = 0x0000;
+				}
+	
+				LCD_WR_DATA(color);
+			}
 		}
 	}
 
@@ -305,68 +297,72 @@ void print2serial(u8 **img, u16 height, u16 width)
 	{
 		for (j = 0; j<width; j++)
 		{
-			//printf("%d ",img[i][j]);
-			printf("%d",img[i][j]>thres?1:0);	 //二值化
+			printf("%d ",img[i][j]);
+			//printf("%d",img[i][j]>thres?1:0);	 //二值化
 			//printf("%x",img[i][j]>100?1:0);
 		}
-		printf("\n");
+		printf("\r\n");
 	}
 }
 
-//在这里完成图像处理的相关操作
-void ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
+//在这里完成图像处理的相关操作，传入图像为灰度图,白字黑背景
+u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
 {
 	//变量声明
 	u8 **img1 = NULL;
 	u8 **alignImg = NULL;
 	RectLink *rlink = NULL;
-	DRect rect = {0,0,0,0};
-	u16 h = 0, w = 0;
+	DRect srcRect = {0, 0, 0, 0};		//用来保存数字所在的矩形区域
+	DRect dstRect = {0, 0, 0, 0};
+	u16 h = 0, w = 0;			//图像的宽高
 
-	LCD_ShowString(40,50,200,200,16,"Enter ImgH OK!");
-	img1 = alloc_mem2d_u8(srcHeight, srcWidth);			//用来存分离出的字符矩形区域
-	LCD_ShowString(40,50,200,200,16,"Enter step 1");
 	alignImg = alloc_mem2d_u8(STD_H, num*STD_W);	//num -> 1 ，用来存标准尺寸字符，8x16
 	rlink = CreateRectLink(num);
 
 	//预处理
-	img_display(img, srcHeight, srcWidth, 0, 0);
-	BinaryImg(img, img, srcHeight, srcWidth, 100);		//100是阈值
-	//displayImg(img, srcHeight, srcWidth);
-	LCD_ShowString(40,50,200,200,16,"BinaryImg() OK!");
+	BinaryImg(img, img, srcHeight, srcWidth, thres);		//100是阈值，二值化之后是黑块白底
+	//floodfill(img, srcHeight, srcWidth);					//填充黑块旁边的白色区域
+	InvertImg(img, img , srcHeight, srcWidth);				//反相，变成黑字白块
+
+	//去除小块的噪声
+	img_display(img, srcHeight, srcWidth, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 3);
+	print2serial(img, srcHeight, srcWidth);
 	
 	//开始
 	//倾斜度矫正
 	//SlopeAdjust(img, img, srcHeight, srcWidth);
 
 	//分离出字符所在的矩形区域
-	DetectRect(img1, img, srcHeight, srcWidth, &rect);
-
-	//计算矩形区域长宽
-	h = rect.Y2 - rect.Y1 + 1;
-	w = rect.X2 - rect.X1 + 1;
-
-	//显示得到矩形区域之后的图像
-	img_display(img, h, w, 0, 0);		
-
-	//分离出单个字符所在的矩形区域,rlink保存
-	DetectNum(img1, h, w, rlink, num);
-	ShowRectLink(rlink);	//输出到串口助手去了
-
-	
-	//紧缩重排，字符尺寸归一化
-	StdAlignImg(alignImg, img1, STD_H, num*STD_W, h, w, rlink, num);
-	img_display(alignImg, srcHeight, srcWidth, 0, 0);
-	ShowRectLink(rlink);	//显示尺寸归一化之后的矩形链表
-	
-	//特征提取
-	TZTQ13(tz, alignImg, STD_H, num*STD_W, rlink, num);		   //13点特征
+//	srcRect = DetectRect(img, srcHeight, srcWidth);
+//	//计算矩形区域长宽
+//	h = srcRect.Y2 - srcRect.Y1 + 1;
+//	w = srcRect.X2 - srcRect.X1 + 1;
+//	dstRect.X2 = w;
+//	dstRect.Y2 = h;
+//	img1 = alloc_mem2d_u8(h, w);			//用来存分离出的字符矩形区域
+//	CopyImg(img1, img, dstRect, srcRect);		
+//
+//	//分离出单个字符所在的矩形区域,rlink保存
+//	DetectNum(img1, h, w, rlink, num);
+//
+//	ShowRectLink(rlink);	//输出到串口助手去了
+//
+//	
+//	//紧缩重排，字符尺寸归一化
+//	StdAlignImg(alignImg, img1, STD_H, num*STD_W, h, w, rlink, num);
+//	
+//	//img_display(alignImg, srcHeight, srcWidth, 0, 0, 1);
+//	ShowRectLink(rlink);	//显示尺寸归一化之后的矩形链表
+//	
+//	//特征提取
+//	TZTQ13(tz, alignImg, STD_H, num*STD_W, rlink, num);		   //13点特征
 
 	//释放内存
 	delete_mem2d_u8(alignImg, STD_H, num*STD_W);
-	delete_mem2d_u8(img1, srcHeight, srcWidth);
+//	delete_mem2d_u8(img1, h, w);					//释放源图像
 	DeRectLink(rlink);
 
+	return 0;
 }
 
 

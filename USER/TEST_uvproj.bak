@@ -207,7 +207,7 @@
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <RoSelD>3</RoSelD>
@@ -409,6 +409,11 @@
               <FileName>memmgr.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\memmgr.c</FilePath>
+            </File>
+            <File>
+              <FileName>recog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\recog.c</FilePath>
             </File>
           </Files>
         </Group>

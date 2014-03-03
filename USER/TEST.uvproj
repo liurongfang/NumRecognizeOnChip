@@ -396,9 +396,9 @@
           <GroupName>USER</GroupName>
           <Files>
             <File>
-              <FileName>test.c</FileName>
+              <FileName>main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\test.c</FilePath>
+              <FilePath>.\main.c</FilePath>
             </File>
             <File>
               <FileName>img.c</FileName>

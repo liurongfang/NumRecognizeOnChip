@@ -10,8 +10,12 @@
 #include "usart.h"
 #include "usmart.h"
 
-//u16 after_h = 0;
-//u16 after_w = 0;
+
+//定义函数要用的变量
+u16 g_lianxushu = 0;
+DPoint visted[20];
+bool lab[4000] = {FALSE};
+
 
 //创建矩形链表
 RectLink *CreateRectLink(u16 num)
@@ -23,8 +27,6 @@ RectLink *CreateRectLink(u16 num)
 	//是第一个节点，与head直接联系起来
 	head = p = pTmp = (RectLink *)malloc(sizeof(RectLink));
 	p->next = NULL;
-	//head->next = p;
-	//pTmp = head->next;
 
 	//不是第1个节点，用pTmp做中继连接到表尾部
 	//这里有num-1次循环
@@ -37,11 +39,6 @@ RectLink *CreateRectLink(u16 num)
 		i++;
 	}
 
-	//printf("Create!%d\n",i);
-	//system("pause");
-
-
-
 	return (head);
 
 }
@@ -53,11 +50,9 @@ u16 InitRectLink(RectLink *head, DRect rect)
 	while (p->next != NULL)
 	{
 		p->data = rect;
-		//printf("Hello!%d %d %d %d",head->data.X1,head->data.Y1,head->data.X2,head->data.Y2);
 		p = p->next;
 	}
 	p->data = rect;
-	//printf("Hello!%d %d %d %d",head->data.X1,head->data.Y1,head->data.X2,head->data.Y2);
 
 	return 0;
 }
@@ -83,7 +78,7 @@ u16 DeRectLink(RectLink *head)
 void ShowRectLink(RectLink *rlink)
 {
 	u16 i = 0;
-	RectLink *p = rlink;
+	RectLink *p = rlink;	//绝对注意，不能直接操作rlink
 
 	printf("接下来打印获得的矩形区域：\n");
 	do
@@ -97,7 +92,7 @@ void ShowRectLink(RectLink *rlink)
 
 	//system("pause");
 }
-//倾斜度矫正
+//倾斜度矫正,存在问题
 void SlopeAdjust(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth)
 {
 	u16 i,j;
@@ -233,23 +228,16 @@ void SlopeAdjust(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth)
 }
 
 //粗略分离出字符所在的矩形区域
-void DetectRect(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, DRect *rect)
+DRect DetectRect(u8 **Src, u16 srcHeight, u16 srcWidth)
 {
-	u16 i,j;			//指向Src
-	u16 k = 0, l = 0;		//指向Dst
-	//DRect rect = {0,0,0,0};
+	u16 i,j;				//指向Src
+//	u16 k = 0, l = 0;		//指向Dst
+	DRect rect = {0, 0, 0, 0};	//保存矩形
 	u16 minX = srcWidth;
 	u16 maxX = 0;
 	u16 minY = srcHeight;
 	u16 maxY = 0;
 
-	//assert(Src != NULL);		//参数检查，断言
-	//if (Src == NULL)
-	//{
-	//	return;
-	//}
-
-	//算法一
 	//求出X方向的极大极小坐标和Y方向的极大极小坐标，就是矩形区域
 	for (i = 0; i<srcHeight; i++)
 	{
@@ -265,7 +253,7 @@ void DetectRect(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, DRect *rect)
 		}
 	}
 
-	//在图像全白时将图像界限作为矩形边界
+	//在图像全白时将图像界限作为矩形边界,防bug
 	if ((minX == srcWidth - 1 ) && (maxX == 1 ) && (minY == srcHeight - 1 ) && (maxY ==1 ))
 	{
 		minX = 1;
@@ -275,46 +263,27 @@ void DetectRect(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, DRect *rect)
 	}
 
 	//将得到的坐标转换为矩形对角坐标,并外扩一个像素
-	(*rect).X1 = (minX - 1)<0?0:(minX - 1);
-	(*rect).Y1 = (minY - 1)<0?0:(minY - 1);
-	(*rect).X2 = maxX + 1;
-	(*rect).Y2 = maxY + 1;
+	rect.X1 = (minX - 1)<0?0:(minX - 1);
+	rect.Y1 = (minY - 1)<0?0:(minY - 1);
+	rect.X2 = maxX + 1;
+	rect.Y2 = maxY + 1;
 
-	//将源图像中的目标矩形区域的像素复制给目标图像
-	for (i = (*rect).Y1, k = 0; i <= (*rect).Y2; i++, k++)
-	{
-		for (j = (*rect).X1, l = 0; j <= (*rect).X2; j++, l++)
-		{
-			
-			Dst[k][l] = Src[i][j];
-		}
-	}
-
-	//同步修改图像宽度和高度
-	//after_h = rect.Y2 - rect.Y1 + 1;
-	//after_w = rect.X2 - rect.X1 + 1;
-
-	//return (rect);
+	return rect;
 }
 
 
 
-//分离出单个字符组成的数组，多个循环，耗时较长
+//分离出单个字符所在的矩形，多个循环，耗时较长
 void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 num)
 {
 	u16 i, j, count = 0;
-	//u16 x, y;		//单个字符的坐标
 	u16 cutFlag = FALSE;		//切割开始的标志
 	u16 allWhite = TRUE;		//当前列全部为白色的标志
-	//u16 pos[60] = {0};		//用来保存字符的始末X，最多 60/2=30 个字符
 	DRect rect = {0, 0, 0, 0};
 
-	//RectLink *rectlink = CreateRectLink(num);		//创建带有num个矩形的矩形链表
 	RectLink *p = rectlink;		//用来指向rectlink表
-	//printf("Hello!");
 	InitRectLink(p, rect);		//用rect初始化rectLink
 	p = rectlink;
-	//printf("Hello!");
 
 	rect.Y2 = srcHeight;
 
@@ -341,37 +310,27 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 			}
 		}
 
-		if (allWhite && cutFlag)		//如果当前列全部为白色像素点，切割毕
+		if (allWhite && cutFlag)		//如果当前列全部为白色像素点，并且切割已经开始
 		{
-			cutFlag = FALSE;	//切割毕
+			cutFlag = FALSE;		//切割结束
 			p->data.X2 = j-1;		//记录结束X坐标
 
-			//printf("NUM:%d\nRECT:{%d %d %d %d}\n",count,p->data.X1,p->data.Y1,p->data.X2,p->data.Y2);
 			count++;			//切割计数加1
 			p = p->next;		//准备下一个链表来存放数据
 		}
 
-		if (count == num)		//如果切割了num个字符，完成，结束跳出
+		if (count >= num)		//如果切割了num个字符，完成，结束跳出
 		{
 			break;
 		}//else contiune
 		
 	}
 
-	//printf("TEST1,OK\n");
-	//system("pause");
-
-	//num = count;		//保存字符个数值
-
 	//下面细化数字区域
 	p = rectlink;		//p指针复位到rectlink头
 	count = 0;
 	for (; count < num; p = p->next)			//准备下一个链表来存放数据，最后一个p = NULL
 	{
-		//printf("TEST+,OK, In the p is:%#x\n",p);
-		//system("pause");
-
-		//if (p == 0) break;
 		for (i = p->data.Y1; i <= p->data.Y2; i++)
 		{
 			allWhite = TRUE;	//假设当前“行”全部为白色像素点
@@ -405,57 +364,23 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 
 	}//数字循环结束
 
-	////拷贝单个字符进图像数组
-	//for (count = 0; count<num ; count++)
-	//{
-	//	x = 0;		//单幅图的“指针”置零
-	//	y = 0;
-
-	//	for (i = 0; i<srcHeight; i++)
-	//	{
-	//		for (j = pos[count*2]; j<pos[count*2+1]; j++)
-	//		{
-	//			Dst[count][x++][y++] = Src[i][j];
-	//		}
-	//	}
-	//}
-
-	//return (rectlink);
 }
 
 //归一化单个字符到指定宽和高，并紧缩重排
 u16 StdAlignImg(u8 **Dst, u8 **Src, u16 dstHeight, u16 dstWidth, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 num)
 {
-	//u16 i,j;	//指向源图像的变量
-	//u16 k,l;	//指向目标图像的变量
 	u16 m;
 	RectLink *p = rlink;		//从rlink取数据
 	DRect srcRect = {0, 0, 0, 0};		//源图像中的矩形区域
 	DRect dstRect = {0, 0, (STD_W - 1), (STD_H - 1)};		//目标图像中的矩形区域，初始化,8x16宽高
-	//DRect oldDstRect = dstRect;
 
 	SetImg(Dst, dstHeight, dstWidth, 1);		//将dst全部填充为白色
-	//printf("After setimg(),before standardImg()!\n");
-	//displayImg(Dst, dstHeight, dstWidth);
-	//system("pause");
 
 	for (m = 0; m<num; m++)
 	{
 		srcRect = p->data;		//获取源图像矩形区域
-		/*for (i = p->data.Y1; i < p->data.Y2; i++)
-		{
-			for (j  = p->data.X1; j < p->data.X2; j++)
-			{
-				printf("before\n");
-				
-				printf("after\n");
-			}
-			printf("I'am change!I'am change!I'am change!\n");
-		}*/
 
-		StandardImg(Dst, Src, dstRect, srcRect);	//从srcRect放缩到dstRect
-
-		//printf("longlonglonglonglonglonglonglonglonglonglonglonglonglong\n");
+		CopyImg(Dst, Src, dstRect, srcRect);	//将源图像的srcRect区域放缩到目标图像的dstRect区域
 
 		//将当前矩形写入到rlik表
 		p->data = dstRect;
@@ -471,52 +396,32 @@ u16 StdAlignImg(u8 **Dst, u8 **Src, u16 dstHeight, u16 dstWidth, u16 srcHeight, 
 }
 
 //标准化图像
-u16 StandardImg(u8 **Dst, u8 **Src, DRect dstRect, DRect srcRect)
+u16 CopyImg(u8 **Dst, u8 **Src, DRect dstRect, DRect srcRect)
 {
-	u16 i = srcRect.Y1, j = srcRect.X1;		//指向源图像
-	u16 k = dstRect.Y1, l = dstRect.X1;		//指向目标图像
-	u16 s, t;		//指向增量
-	double xScale = 0, yScale = 0;
-	u16 srcHeight = srcRect.Y2 - srcRect.Y1 + 1;		//得到源图像宽高
+	u16 i = srcRect.Y1, j = srcRect.X1;		//指向源图像的起始坐标
+	u16 k = dstRect.Y1, l = dstRect.X1;		//指向目标图像的起始坐标
+	u16 s, t;								//指向增量
+	double xScale = 0, yScale = 0;			//缩放比
+	u16 srcHeight = srcRect.Y2 - srcRect.Y1 + 1;		//得到源图像要截取部分的宽高
 	u16 srcWidth = srcRect.X2 - srcRect.X1 + 1;
-	u16 dstHeight = dstRect.Y2 - dstRect.Y1 + 1;
+	u16 dstHeight = dstRect.Y2 - dstRect.Y1 + 1;		//得到目标图像要截取部分的宽高
 	u16 dstWidth = dstRect.X2 - dstRect.X1 + 1;
 
 	//得到放缩比，这里可以用定点数优化之，Q16
 	yScale = (double ) (srcHeight / (double )dstHeight);
 	xScale = (double ) (srcWidth / (double )dstWidth);
 
-	//printf("%d/%d=%0.2lf %d/%d=%0.2lf\n",srcHeight,dstHeight,yScale,srcWidth,dstWidth,xScale);
-	//system("pause");
-
-	//循环遍历，稀疏采样
+	//循环遍历，缩放映射
 	for (k = dstRect.Y1; k <= dstRect.Y2; k++)
 	{
-		s = (k - dstRect.Y1);		//计算y增量
+		s = (k - dstRect.Y1 );		//计算y增量
 		for (l = dstRect.X1; l <= dstRect.X2; l++)
 		{
 			
 			t = (l - dstRect.X1);//计算x增量
 			Dst[k][l] = Src[(u16 )(i + s * yScale + 0.5) ][(u16 )(j + t * xScale + 0.5) ];
-			//调试用，结果发现错误
-			/*if ((i + s * yScale + 0.5) > srcRect.Y2)
-			{
-				printf("in std, y error!\n");
-				printf("1 & 2 is:%d %d\n",(u16 )(i + s * yScale + 0.5),srcRect.Y2);
-				system("pause");
-			}
-			if ((j + t * xScale + 0.5) > srcRect.X2)
-			{
-				printf("in std, x error!\n");
-				printf("1 & 2 is:%d %d,x1=%d\n",(u16 )(j + t * xScale + 0.5),srcRect.X2,srcRect.X1);
-				printf("s:%d and t:%d\n",s,t);
-				system("pause");
-			}*/
 		}
 	}
-
-	//after_h = dstHeight;
-	//after_w = dstWidth;
 
 	return 0;
 }
@@ -527,47 +432,8 @@ u16 TZTQ13(u8 **tz, u8 **Src, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 
 	//还是将图像作为一整张来提取
 	u16 i, j;
 	u16 m, a;
-	//u16 te = 0;
 	u16 height,width;
 	RectLink *p = rlink;
-
-	//水平两条，竖直两条，逐行扫描，逐列扫描,
-
-	////水平逐行像素，h个特征
-	//for (i = 0; i<srcHeight; i++)
-	//{
-	//	for (j = 0; j<srcWidth; j++)
-	//	{
-	//		if (0 == Src[i][j])
-	//		{
-	//			TZ[i]++;
-	//		}
-	//	}
-	//}
-
-	////竖直逐列像素，w个特征
-	//for (j = 0; j<srcWidth; j++)
-	//{
-	//	for (i = 0; i<srcHeight; i++)
-	//	{
-	//		if (0 == Src[i][j])
-	//		{
-	//			TZ[srcHeight + j]++;
-	//		}
-	//	}
-	//}
-
-	//提取前8个特征
-	//for (m = 0; m<8; m++)
-	//{
-	//	for (i=u16(m/2)*8; i<(u16(m/2)+1)*8; i++)
-	//	{
-	//		for (j=m%2*8+k*width;j<(m%2+1)*8+k*width;j++)
-	//		{
-	//			TZ[m]++;
-	//		}
-	//	}
-	//}
 
 
 	//提取第9个特征，总像素值
@@ -593,20 +459,12 @@ u16 TZTQ13(u8 **tz, u8 **Src, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 
 				//水平方向分成2块
 				for (j = p->data.X1 + (a%2)*width/2; j <= p->data.X1-1 + (a%2+1)*width/2; j++)
 				{
-					//printf("p->data.Y1=%d + (a%4)*height/4=%d\n",(a%4)*height/4,p->data.Y1);
-					//printf("p->data.X1=%d + (a%2)*width/2=%d\n",(a%2)*width/2,p->data.X1);
-					//printf("the cur:(%d, %d)\n",i,j);
-					//system("pause");
 					if (0 == Src[i][j])
 					{
 						tz[m][a]++;
 					}
-					//te++;
 				}
 			}
-			//printf("当前块像素数目:%d\n",te);
-			//system("pause");
-			//te = 0;
 		}
 
 
@@ -661,7 +519,7 @@ void TZ_Std(double **tzDb,u8 **tz, u16 num, u16 tzCount)
 	u16 i,j;
 	u16 max = 0, min = 1000;
 
-	//预处理，将UCHAR **tz变成double **tz
+	//预处理，将u8 **tz变成double **tz
 	for (i = 0; i<num; i++)
 	{
 		for (j = 0; j<tzCount; j++)
@@ -683,8 +541,6 @@ void TZ_Std(double **tzDb,u8 **tz, u16 num, u16 tzCount)
 }
 
 
-
-//特征提取，h+w+4个特征
 //将图像反相，0变成1,1变成0
 void InvertImg(u8 **Dst, u8 **Src , u16 srcHeight, u16 srcWidth)
 {
@@ -694,7 +550,7 @@ void InvertImg(u8 **Dst, u8 **Src , u16 srcHeight, u16 srcWidth)
 	{
 		for (j = 0; j<srcWidth; j++)
 		{
-			Dst[i][j] = 1 - Src[i][j];		//0-1反相
+			Dst[i][j] = 0x01 - Src[i][j];		//0-1反相
 		}
 	}
 
@@ -702,7 +558,7 @@ void InvertImg(u8 **Dst, u8 **Src , u16 srcHeight, u16 srcWidth)
 }
 
 //将图像的像素值全部置为tag
-u16 SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag)
+void SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag)
 {
 	/*u8 *p = (u8 *)&Dst;
 	u16 i = 0;
@@ -723,11 +579,11 @@ u16 SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag)
 
 	}
 
-	return 0;
+	//return 0;
 }
 
 //将图像二值化
-u16 BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u16 thres)
+void BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u8 thres)
 {
 	u16 i, j;
 
@@ -736,7 +592,7 @@ u16 BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u16 thres)
 	{
 		for (j = 0; j<srcWidth; j++)
 		{
-			if (Src[i][j] > (u8)thres)		//大于阈值
+			if (Src[i][j] >= thres)		//大于等于阈值
 			{
 				Dst[i][j] = 1;		//置为1	,白色点
 			} 
@@ -747,11 +603,11 @@ u16 BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u16 thres)
 		}
 	}
 
-	return 0;
+	//return 0;
 }
 
 //全局阈值函数
-//给定一个初始阈值T，在T两边分别计算平均阈值T1和T2，不等，T=(T1+T2)/2，知道两边的平均阈值相等
+//给定一个初始阈值T，在T两边分别计算平均阈值T1和T2，不等，T=(T1+T2)/2，直到两边的平均阈值相等
 u8 GlobalThreshold(u8 **img, u16 height, u16 width)
 {
 	u8 pg[256] = {0};		 //直方图数组
@@ -867,70 +723,162 @@ u8 otsuThreshold(u8 **img, u16 height, u16 width)
 	return threshold;
 }
 
-//去除图像中的孤立像素块
-//void RemoveSepartBlock(u8 **img, u16 height, u16 width, u16 x, u16 y, bool lab, DPoint visted[],u16 lianxushu)
+//简单填充，填充黑块周围的白色区域，有可能会产生新的“孔”
+u16 floodfill(u8 **img, u16 height, u16 width)
+{
+	u16 i,j;
+	u16 minX = height, minY = width, maxX = 0, maxY = 0;
+	
+	for (i = 0; i<height; i++)		//求出字符所在的矩形区域，后面仅对矩形区域操作
+	{
+		for (j = 0; j<width; j++)
+		{
+			if (0 == img[i][j])	//如果扫描到黑点
+			{
+				if (j < minX) minX = j;		//更新矩形
+				if (j > maxX) maxX = j;
+				if (i < minY) minY = i;
+				if (i > maxY) maxY = i;
+			}
+		}
+	}
+	
+	for (i = minY; i<=maxY; i++)		//????,??????
+	{
+		for (j = minX; j<=maxX; j++)
+		{
+			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
+			{
+				break;
+			}
+			else
+			{
+				img[i][j] = 0;		//将像素点填充
+			}
+		}
+	}
+	
+	for (i = minX; i<=maxX; i++)		//????,??????
+	{
+		for (j = maxY; j>=minY; j--)
+		{
+			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
+			{
+				break;
+			}
+			else
+			{
+				img[i][j] = 0;		//将像素点填充
+			}
+		}
+	}
+	
+	for (j = minX; j<=maxX; j++)		//????,??????
+	{
+		for (i = minY; i<=maxY; i++)
+		{
+			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
+			{
+				break;
+			}
+			else
+			{
+				img[i][j] = 0;		//将像素点填充
+			}
+		}
+	}
+	
+	for (j = minX; j<=maxX; j++)		//????,??????
+	{
+		for (i = maxY-1; i>=minY; i--)
+		{
+			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
+			{
+				break;
+			}
+			else
+			{
+				img[i][j] = 0;		//将像素点填充
+			}
+		}
+	}
+	
+	return 0;
+}
+
+
+//寻找图像中的孤立像素块
+bool FindBlock(u8 **img, u16 height, u16 width, u16 x, u16 y, bool lab[], DPoint visted[],u16 lianxushu)
+{
+	u16 i,j,count;
+
+	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
+	{
+		return TRUE;
+	}
+	else
+	{
+		g_lianxushu++;			//长度加1
+		lab[y*height+x] = TRUE;				   //置访问标志
+		visted[g_lianxushu - 1].x = x;		   //记录下当前坐标
+		visted[g_lianxushu - 1].y = y;
+	}
+	
+	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
+	{
+		return TRUE;
+	}
+	else							//进入递归,8方向遍历
+	{
+		if ((x - 1 ) >= 0 && (y - 1 ) >= 0 && (x + 1 ) <= (width - 1 ) && (y + 1 ) < (height - 1 ) )
+		{
+			if (img[x-1][y-1] == 0 && !lab[(y-1)*height+(x-1)])		//左上角
+				FindBlock(img, height, width, x-1, y-1, lab, visted, lianxushu);
+
+			if (img[x][y-1] == 0 && !lab[(y-1)*height+(x)])		//上
+				FindBlock(img, height, width, x, y-1, lab, visted, lianxushu);
+	
+			if (img[x+1][y-1] == 0 && !lab[(y-1)*height+(x+1)])		//右上角
+				FindBlock(img, height, width, x+1, y-1, lab, visted, lianxushu);
+
+			if (img[x-1][y] == 0 && !lab[(y)*height+(x-1)])		//左
+				FindBlock(img, height, width, x-1, y, lab, visted, lianxushu);
+
+			if (img[x-1][y+1] == 0 && !lab[(y+1)*height+(x-1)])		//左下角
+				FindBlock(img, height, width, x-1, y+1, lab, visted, lianxushu);
+
+	
+			if (img[x+1][y] == 0 && !lab[(y)*height+(x+1)])		//右
+				FindBlock(img, height, width, x+1, y, lab, visted, lianxushu);
+	
+	
+			if (img[x][y+1] == 0 && !lab[(y+1)*height+(x)])		//下
+				FindBlock(img, height, width, x, y+1, lab, visted, lianxushu);
+	
+			if (img[x+1][y+1] == 0 && !lab[(y+1)*height+(x+1)])		//右下角
+				FindBlock(img, height, width, x+1, y+1, lab, visted, lianxushu);
+
+		}
+		else
+		{
+			return TRUE;	
+		}
+
+		if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
+		{
+			return TRUE;
+		} 
+	}
+
+	return FALSE;
+}
+
+//删除孤立像素点
+//void RemoveSeprateBlock(u8 **img, DPoint visted[])
 //{
-//	u16 i,j,count;
-//
-//	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
-//	{
-//		return TRUE;
-//	}
-//	else
-//	{
-//		g_lianxushu++;			//长度加1
-//		lab[y*height+x] = TRUE;				   //置访问标志
-//		visted[g_lianxushu - 1].x = x;		   //记录下当前坐标
-//		visted[g_lianxushu - 1].y = y;
-//	}
-//	
-//	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
-//	{
-//		return TRUE;
-//	}
-//	else							//进入递归,8方向遍历
-//	{
-//		if ( (x-1) >= 0 && (y-1) >= 0)
-//		{
-//			if (img[x-1][y-1] == 0)		//左上角
-//				RemoveSepartBlock(img, height, width, x-1, y-1, lab, visted[], lianxushu);
-//		}
-//
-//		if ( (y-1) >= 0)
-//		{
-//			if (img[x][y-1] == 0)		//上
-//				RemoveSepartBlock(img, height, width, x, y-1, lab, visted[], lianxushu);
-//	
-//			if (img[x+1][y-1] == 0)		//右上角
-//				RemoveSepartBlock(img, height, width, x+1, y-1, lab, visted[], lianxushu);
-//		}
-//
-//		if ( (x-1) >= 0)
-//		{
-//			if (img[x-1][y] == 0)		//左
-//				RemoveSepartBlock(img, height, width, x-1, y, lab, visted[], lianxushu);
-//
-//			if (img[x-1][y+1] == 0)		//左下角
-//			RemoveSepartBlock(img, height, width, x-1, y+1, lab, visted[], lianxushu);
-//		}
-//
-//		if (img[x+1][y] == 0)		//右
-//			RemoveSepartBlock(img, height, width, x+1, y, lab, visted[], lianxushu);
+//	  u16 i,j;
 //
 //
-//		if (img[x][y+1] == 0)		//下
-//			RemoveSepartBlock(img, height, width, x, y+1, lab, visted[], lianxushu);
-//
-//		if (img[x+1][y+1] == 0)		//右下角
-//			RemoveSepartBlock(img, height, width, x+1, y+1, lab, visted[], lianxushu);
-//
-//		if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
-//		{
-//			return TRUE;
-//		} 
-//	}
-//
-//	return FALSE;
 //}
 
 
