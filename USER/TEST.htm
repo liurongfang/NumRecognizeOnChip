@@ -3,7 +3,7 @@
 <title>Static Call Graph - [E:\STM32\NumRecognize\USER\TEST.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image E:\STM32\NumRecognize\USER\TEST.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Mon Mar 03 13:12:32 2014
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 4.1 [Build 481]: Last Updated: Wed Mar 05 12:04:41 2014
 <BR><P>
 <H3>Maximum Stack Usage =        464 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -311,97 +311,98 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
-<P><STRONG><a name="[4c]"></a>img_display</STRONG> (Thumb, 336 bytes, Stack size 56 bytes, main.o(.text))
-<BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = img_display &rArr; LCD_Fill &rArr; LCD_SetCursor &rArr; LCD_WriteReg
+<P><STRONG><a name="[4c]"></a>img_display</STRONG> (Thumb, 312 bytes, Stack size 56 bytes, main.o(.text))
+<BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = img_display &rArr; LCD_Scan_Dir &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
-<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Fill
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
 </UL>
-<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
-<P><STRONG><a name="[51]"></a>ImageHandle</STRONG> (Thumb, 142 bytes, Stack size 64 bytes, main.o(.text))
+<P><STRONG><a name="[50]"></a>ImageHandle</STRONG> (Thumb, 142 bytes, Stack size 64 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 228<LI>Call Chain = ImageHandle &rArr; alloc_mem2d_u8 &rArr; LCD_ShowString &rArr; LCD_ShowChar &rArr; LCD_DrawPoint &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delete_mem2d_u8
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
-<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InvertImg
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DeRectLink
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateRectLink
-<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BinaryImg
+<BR>[Calls]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delete_mem2d_u8
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
+<LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InvertImg
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DeRectLink
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateRectLink
+<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;BinaryImg
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;img_display
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print2serial
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[58]"></a>camera_refresh</STRONG> (Thumb, 322 bytes, Stack size 48 bytes, main.o(.text))
+<P><STRONG><a name="[57]"></a>camera_refresh</STRONG> (Thumb, 326 bytes, Stack size 48 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = camera_refresh &rArr; LCD_Scan_Dir &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
-<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[59]"></a>system_init</STRONG> (Thumb, 520 bytes, Stack size 16 bytes, main.o(.text))
+<P><STRONG><a name="[58]"></a>system_init</STRONG> (Thumb, 520 bytes, Stack size 16 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 148<LI>Call Chain = system_init &rArr; LCD_ShowString &rArr; LCD_ShowChar &rArr; LCD_DrawPoint &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<BR>[Calls]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
 <LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_init
+<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_init
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timerx_Init
-<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stm32_Clock_Init
+<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stm32_Clock_Init
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Window_Set
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Init
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Fill
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LED_Init
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Fill
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI15_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[44]"></a>main</STRONG> (Thumb, 190 bytes, Stack size 16 bytes, main.o(.text))
+<P><STRONG><a name="[44]"></a>main</STRONG> (Thumb, 210 bytes, Stack size 16 bytes, main.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 464<LI>Call Chain = main &rArr; GlobalThreshold &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delete_mem2d_u8
+<BR>[Calls]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delete_mem2d_u8
 <LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
 <LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;GlobalThreshold
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;img_display
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry7.o(.ARM.Collect$$$$00000007)
 </UL>
-<P><STRONG><a name="[53]"></a>CreateRectLink</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, img.o(.text))
+<P><STRONG><a name="[52]"></a>CreateRectLink</STRONG> (Thumb, 66 bytes, Stack size 24 bytes, img.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = CreateRectLink &rArr; malloc
 </UL>
 <BR>[Calls]<UL><LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 </UL>
-<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
 <P><STRONG><a name="[71]"></a>InitRectLink</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, img.o(.text), UNUSED)
 <BR><BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DetectNum
 </UL>
 
-<P><STRONG><a name="[57]"></a>DeRectLink</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, img.o(.text))
+<P><STRONG><a name="[56]"></a>DeRectLink</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, img.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = DeRectLink &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
-<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
 <P><STRONG><a name="[67]"></a>ShowRectLink</STRONG> (Thumb, 56 bytes, Stack size 24 bytes, img.o(.text), UNUSED)
@@ -460,16 +461,16 @@ Global Symbols
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cdcmple
 </UL>
 
-<P><STRONG><a name="[55]"></a>InvertImg</STRONG> (Thumb, 48 bytes, Stack size 20 bytes, img.o(.text))
+<P><STRONG><a name="[54]"></a>InvertImg</STRONG> (Thumb, 48 bytes, Stack size 20 bytes, img.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = InvertImg
 </UL>
-<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
-<P><STRONG><a name="[54]"></a>BinaryImg</STRONG> (Thumb, 66 bytes, Stack size 20 bytes, img.o(.text))
+<P><STRONG><a name="[53]"></a>BinaryImg</STRONG> (Thumb, 66 bytes, Stack size 20 bytes, img.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = BinaryImg
 </UL>
-<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<BR>[Called By]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
 <P><STRONG><a name="[64]"></a>GlobalThreshold</STRONG> (Thumb, 418 bytes, Stack size 344 bytes, img.o(.text))
@@ -508,24 +509,24 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FindBlock
 </UL>
 
-<P><STRONG><a name="[52]"></a>alloc_mem2d_u8</STRONG> (Thumb, 74 bytes, Stack size 32 bytes, memmgr.o(.text))
+<P><STRONG><a name="[51]"></a>alloc_mem2d_u8</STRONG> (Thumb, 74 bytes, Stack size 32 bytes, memmgr.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = alloc_mem2d_u8 &rArr; LCD_ShowString &rArr; LCD_ShowChar &rArr; LCD_DrawPoint &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
+<BR>[Calls]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
 <LI><a href="#[65]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
-<P><STRONG><a name="[56]"></a>delete_mem2d_u8</STRONG> (Thumb, 42 bytes, Stack size 24 bytes, memmgr.o(.text))
+<P><STRONG><a name="[55]"></a>delete_mem2d_u8</STRONG> (Thumb, 42 bytes, Stack size 24 bytes, memmgr.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = delete_mem2d_u8 &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
+<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ImageHandle
 </UL>
 
 <P><STRONG><a name="[85]"></a>allloc_mem2d_dbl</STRONG> (Thumb, 84 bytes, Stack size 24 bytes, memmgr.o(.text), UNUSED)
@@ -536,16 +537,16 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 </UL>
 
-<P><STRONG><a name="[5c]"></a>delay_init</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, delay.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<P><STRONG><a name="[5b]"></a>delay_init</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, delay.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[2]"></a>delay_ms</STRONG> (Thumb, 54 bytes, Stack size 0 bytes, delay.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[1f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI0_IRQHandler
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 <LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;wait
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usmart_config.o(.data)
@@ -579,7 +580,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timer2_Init
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;WWDG_Init
 <LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTIX_Init
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
 <LI><a href="#[61]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Timerx_Init
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI15_Init
 </UL>
@@ -596,7 +597,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_NVIC_SetVectorTable
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stm32_Clock_Init
+<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Stm32_Clock_Init
 </UL>
 
 <P><STRONG><a name="[8b]"></a>Sys_Standby</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, sys.o(.text), UNUSED)
@@ -607,17 +608,17 @@ Global Symbols
 
 <P><STRONG><a name="[90]"></a>JTAG_Set</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, sys.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTIX_Init
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 <LI><a href="#[62]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;EXTI15_Init
 </UL>
 
-<P><STRONG><a name="[5a]"></a>Stm32_Clock_Init</STRONG> (Thumb, 130 bytes, Stack size 12 bytes, sys.o(.text))
+<P><STRONG><a name="[59]"></a>Stm32_Clock_Init</STRONG> (Thumb, 130 bytes, Stack size 12 bytes, sys.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = Stm32_Clock_Init &rArr; MYRCC_DeInit
 </UL>
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MYRCC_DeInit
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[d7]"></a>_sys_exit</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, usart.o(.text), UNUSED)
@@ -628,7 +629,7 @@ Global Symbols
 <P><STRONG><a name="[3e]"></a>USART1_IRQHandler</STRONG> (Thumb, 116 bytes, Stack size 0 bytes, usart.o(.text))
 <BR>[Address Reference Count : 1]<UL><LI> stm32f10x.o(RESET)
 </UL>
-<P><STRONG><a name="[5b]"></a>uart_init</STRONG> (Thumb, 230 bytes, Stack size 40 bytes, usart.o(.text))
+<P><STRONG><a name="[5a]"></a>uart_init</STRONG> (Thumb, 230 bytes, Stack size 40 bytes, usart.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = uart_init &rArr; MY_NVIC_Init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_frsub
@@ -638,11 +639,11 @@ Global Symbols
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
 <LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fdiv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
-<P><STRONG><a name="[5e]"></a>LED_Init</STRONG> (Thumb, 110 bytes, Stack size 0 bytes, led.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<P><STRONG><a name="[5d]"></a>LED_Init</STRONG> (Thumb, 110 bytes, Stack size 0 bytes, led.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[1f]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 58 bytes, Stack size 8 bytes, exti.o(.text))
@@ -668,7 +669,7 @@ Global Symbols
 <LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Ex_NVIC_Config
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[d8]"></a>IWDG_Init</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, wdg.o(.text), UNUSED)
@@ -698,7 +699,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_NVIC_Init
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[da]"></a>PWM_Init</STRONG> (Thumb, 168 bytes, Stack size 0 bytes, timer.o(.text), UNUSED)
@@ -709,10 +710,10 @@ Global Symbols
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ReadPoint
 <LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ReadReg
 <LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteReg
-<LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
-<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 </UL>
 
 <P><STRONG><a name="[94]"></a>LCD_RD_DATA</STRONG> (Thumb, 108 bytes, Stack size 8 bytes, ili93xx.o(.text))
@@ -721,7 +722,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 <BR>[Called By]<UL><LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ReadReg
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 </UL>
 
 <P><STRONG><a name="[95]"></a>LCD_WriteReg</STRONG> (Thumb, 44 bytes, Stack size 8 bytes, ili93xx.o(.text))
@@ -731,9 +732,9 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DisplayOff
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DisplayOn
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
-<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 </UL>
 
 <P><STRONG><a name="[97]"></a>LCD_ReadReg</STRONG> (Thumb, 16 bytes, Stack size 8 bytes, ili93xx.o(.text))
@@ -742,18 +743,18 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_RD_DATA
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WR_REG
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 </UL>
 
-<P><STRONG><a name="[50]"></a>LCD_WriteRAM_Prepare</STRONG> (Thumb, 12 bytes, Stack size 4 bytes, ili93xx.o(.text))
+<P><STRONG><a name="[4f]"></a>LCD_WriteRAM_Prepare</STRONG> (Thumb, 12 bytes, Stack size 4 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 4<LI>Call Chain = LCD_WriteRAM_Prepare
 </UL>
 <BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WR_REG
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawPoint
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Fill
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Fill
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;img_display
 </UL>
 
@@ -767,7 +768,7 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_BGR2RGB
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WR_REG
 <LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
 </UL>
 
 <P><STRONG><a name="[9a]"></a>LCD_DisplayOn</STRONG> (Thumb, 46 bytes, Stack size 4 bytes, ili93xx.o(.text), UNUSED)
@@ -780,22 +781,22 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WR_REG
 </UL>
 
-<P><STRONG><a name="[4e]"></a>LCD_Scan_Dir</STRONG> (Thumb, 722 bytes, Stack size 20 bytes, ili93xx.o(.text))
+<P><STRONG><a name="[4d]"></a>LCD_Scan_Dir</STRONG> (Thumb, 722 bytes, Stack size 20 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = LCD_Scan_Dir &rArr; LCD_WriteReg
 </UL>
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteReg
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WR_REG
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Display_Dir
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;img_display
 </UL>
 
 <P><STRONG><a name="[9c]"></a>LCD_DrawPoint</STRONG> (Thumb, 56 bytes, Stack size 16 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = LCD_DrawPoint &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowChar
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Draw_Circle
@@ -805,21 +806,21 @@ Global Symbols
 <P><STRONG><a name="[9d]"></a>LCD_Display_Dir</STRONG> (Thumb, 240 bytes, Stack size 8 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = LCD_Display_Dir &rArr; LCD_Scan_Dir &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
+<BR>[Calls]<UL><LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Scan_Dir
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 </UL>
 
 <P><STRONG><a name="[9e]"></a>LCD_Clear</STRONG> (Thumb, 70 bytes, Stack size 16 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = LCD_Clear &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 </UL>
 
-<P><STRONG><a name="[5f]"></a>LCD_Init</STRONG> (Thumb, 9456 bytes, Stack size 8 bytes, ili93xx.o(.text))
+<P><STRONG><a name="[5e]"></a>LCD_Init</STRONG> (Thumb, 9456 bytes, Stack size 8 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = LCD_Init &rArr; LCD_Clear &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
@@ -832,17 +833,16 @@ Global Symbols
 <LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2printf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
-<P><STRONG><a name="[4d]"></a>LCD_Fill</STRONG> (Thumb, 102 bytes, Stack size 40 bytes, ili93xx.o(.text))
+<P><STRONG><a name="[60]"></a>LCD_Fill</STRONG> (Thumb, 102 bytes, Stack size 40 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = LCD_Fill &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
-<BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
-<LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
+<BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteRAM_Prepare
+<LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetCursor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
-<LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;img_display
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[9f]"></a>LCD_DrawLine</STRONG> (Thumb, 176 bytes, Stack size 72 bytes, ili93xx.o(.text), UNUSED)
@@ -866,7 +866,7 @@ Global Symbols
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowxNum
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowNum
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowString
 </UL>
 
 <P><STRONG><a name="[a4]"></a>LCD_Pow</STRONG> (Thumb, 22 bytes, Stack size 8 bytes, ili93xx.o(.text), UNUSED)
@@ -884,17 +884,17 @@ Global Symbols
 <LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowChar
 </UL>
 
-<P><STRONG><a name="[60]"></a>LCD_ShowString</STRONG> (Thumb, 102 bytes, Stack size 40 bytes, ili93xx.o(.text))
+<P><STRONG><a name="[5f]"></a>LCD_ShowString</STRONG> (Thumb, 102 bytes, Stack size 40 bytes, ili93xx.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 132<LI>Call Chain = LCD_ShowString &rArr; LCD_ShowChar &rArr; LCD_DrawPoint &rArr; LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ShowChar
 </UL>
-<BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
+<BR>[Called By]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
 <LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
-<P><STRONG><a name="[5d]"></a>OV7670_Init</STRONG> (Thumb, 250 bytes, Stack size 16 bytes, ov7670.o(.text))
+<P><STRONG><a name="[5c]"></a>OV7670_Init</STRONG> (Thumb, 250 bytes, Stack size 16 bytes, ov7670.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = OV7670_Init &rArr; SCCB_WR_Reg &rArr; SCCB_WR_Byte
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCCB_WR_Reg
@@ -903,7 +903,7 @@ Global Symbols
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;JTAG_Set
 <LI><a href="#[2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_ms
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[6]"></a>OV7670_Light_Mode</STRONG> (Thumb, 92 bytes, Stack size 24 bytes, ov7670.o(.text))
@@ -947,11 +947,11 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCCB_WR_Reg
 <LI><a href="#[5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SCCB_RD_Reg
 </UL>
-<BR>[Called By]<UL><LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
+<BR>[Called By]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;system_init
 </UL>
 
 <P><STRONG><a name="[a6]"></a>SCCB_Init</STRONG> (Thumb, 66 bytes, Stack size 0 bytes, sccb.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
+<BR><BR>[Called By]<UL><LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
 </UL>
 
 <P><STRONG><a name="[a7]"></a>SCCB_Start</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, sccb.o(.text))
@@ -1011,7 +1011,7 @@ Global Symbols
 <LI><a href="#[7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Color_Saturation
 <LI><a href="#[6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Light_Mode
 <LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Window_Set
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usmart_config.o(.data)
 </UL>
@@ -1026,7 +1026,7 @@ Global Symbols
 <LI><a href="#[3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delay_us
 </UL>
 <BR>[Called By]<UL><LI><a href="#[63]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Window_Set
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
+<LI><a href="#[5c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;OV7670_Init
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> usmart_config.o(.data)
 </UL>
@@ -1214,14 +1214,14 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
 </UL>
 
 <P><STRONG><a name="[7e]"></a>__aeabi_fmul</STRONG> (Thumb, 108 bytes, Stack size 8 bytes, fmul.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_fmul
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;otsuThreshold
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
 </UL>
 
 <P><STRONG><a name="[7c]"></a>__aeabi_fdiv</STRONG> (Thumb, 128 bytes, Stack size 8 bytes, fdiv.o(.text))
@@ -1230,7 +1230,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;otsuThreshold
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
 </UL>
 
 <P><STRONG><a name="[6a]"></a>__aeabi_dadd</STRONG> (Thumb, 318 bytes, Stack size 48 bytes, dadd.o(.text))
@@ -1298,7 +1298,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;otsuThreshold
-<LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
 </UL>
 
 <P><STRONG><a name="[69]"></a>__aeabi_i2d</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, dflti.o(.text))
@@ -1325,7 +1325,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[8d]"></a>__aeabi_f2uiz</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, ffixui.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
+<BR><BR>[Called By]<UL><LI><a href="#[5a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uart_init
 </UL>
 
 <P><STRONG><a name="[6f]"></a>__aeabi_d2uiz</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dfixui.o(.text))
@@ -1458,7 +1458,7 @@ Global Symbols
 
 <P><STRONG><a name="[e6]"></a>__decompress1</STRONG> (Thumb, 92 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
 
-<P><STRONG><a name="[4f]"></a>LCD_SetCursor</STRONG> (Thumb, 226 bytes, Stack size 12 bytes, ili93xx.o(i.LCD_SetCursor))
+<P><STRONG><a name="[4e]"></a>LCD_SetCursor</STRONG> (Thumb, 226 bytes, Stack size 12 bytes, ili93xx.o(i.LCD_SetCursor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = LCD_SetCursor &rArr; LCD_WriteReg
 </UL>
 <BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_WriteReg
@@ -1467,8 +1467,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_DrawPoint
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_ReadPoint
-<LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Fill
-<LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Fill
+<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;camera_refresh
 <LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;img_display
 </UL>
 
@@ -1485,8 +1485,8 @@ Global Symbols
 <LI><a href="#[d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usmart_exe
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usmart_sys_cmd_exe
 <LI><a href="#[67]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ShowRectLink
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Init
 <LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;print2serial
 </UL>
@@ -1523,16 +1523,16 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = free
 </UL>
 <BR>[Called By]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;detect_mem2d_dbl
-<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delete_mem2d_u8
-<LI><a href="#[57]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DeRectLink
+<LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;delete_mem2d_u8
+<LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;DeRectLink
 </UL>
 
 <P><STRONG><a name="[65]"></a>malloc</STRONG> (Thumb, 92 bytes, Stack size 20 bytes, malloc.o(i.malloc))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = malloc
 </UL>
 <BR>[Called By]<UL><LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;allloc_mem2d_dbl
-<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
-<LI><a href="#[53]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateRectLink
+<LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;alloc_mem2d_u8
+<LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CreateRectLink
 </UL>
 
 <P><STRONG><a name="[81]"></a>pow</STRONG> (Thumb, 2510 bytes, Stack size 112 bytes, pow.o(i.pow), UNUSED)

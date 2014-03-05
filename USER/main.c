@@ -32,6 +32,8 @@ int main(void)
 	{
 		img = alloc_mem2d_u8( IMG_H, IMG_W);
 		tz = alloc_mem2d_u8( NUM, TZ);
+
+		//OV7670_Special_Effects(1);		//1:负片效果
 		  
 		//back:
 		//开始工作						 	 
@@ -39,7 +41,7 @@ int main(void)
 		{	
 	 		camera_refresh(img, 4, 4);	//更新显示	 
 			
-	 		if(i != ov_frame)		//DS0闪烁.
+	 		if(i != ov_frame)			//DS0闪烁.
 			{
 				i = ov_frame;
 				LED0 = !LED0;
@@ -60,7 +62,7 @@ int main(void)
 		printf("galobal thres:%d\r\n", thres);
 //		thres = otsuThreshold(img, IMG_H, IMG_W);
 //		printf("ostu thres:%d", thres);
-//		img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1);  //显示在屏幕中间
+		img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 2);  //显示在屏幕中间
 //		print2serial(img, IMG_H, IMG_W);				   //测试用，不可去掉
 	
 		//wait();
@@ -184,12 +186,13 @@ void camera_refresh(u8 **img, u16 yScale, u16 xScale)
 						
 				color= color_y + color_u + color_v;  		//显示
 								 	 
-				LCD_WR_DATA(color);
 				if (i != 319)	   //测试发现第319行全是白色的，不知道怎么回事，所以就不要了，用318行的代替
 				{
 					img[i/yScale][j/xScale] = color_gray;	//送到图像数组，上到下，左到右存储,加1减1是补偿精度，否则img[IMG_H-1]这一行没有
 				}
 				//if (i >316) printf("c%d:%d ",i,color_gray);  //测试用
+
+				LCD_WR_DATA(~color);
 			} 
 		}
 		//printf("#\n");		   //测试用
@@ -210,7 +213,7 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 	u16 i,j;
 	u16 color;
 
-	LCD_Fill( 0, 0, 239, 319,WHITE);		//sxy,exy
+//	LCD_Fill( 0, 0, 239, 319,WHITE);		//sxy,exy
 	//LCD_Scan_Dir(U2D_L2R);		//从上到下,从左到右
 	LCD_Scan_Dir(DFT_SCAN_DIR);	//恢复默认扫描方向 
 	

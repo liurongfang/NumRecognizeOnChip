@@ -14,7 +14,7 @@ Section Cross References
     stm32f10x.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
     main.o(.text) refers to delay.o(.text) for delay_ms
     main.o(.text) refers to printf8.o(i.__0printf$8) for __2printf
-    main.o(.text) refers to ili93xx.o(.text) for LCD_Fill
+    main.o(.text) refers to ili93xx.o(.text) for LCD_Scan_Dir
     main.o(.text) refers to ili93xx.o(i.LCD_SetCursor) for LCD_SetCursor
     main.o(.text) refers to memmgr.o(.text) for alloc_mem2d_u8
     main.o(.text) refers to img.o(.text) for CreateRectLink
@@ -847,11 +847,11 @@ Image Symbol Table
     USB_LP_CAN_RX0_IRQHandler                0x0800011b   Thumb Code     0  stm32f10x.o(.text)
     wait                                     0x08000121   Thumb Code    52  main.o(.text)
     print2serial                             0x08000155   Thumb Code    56  main.o(.text)
-    img_display                              0x0800018d   Thumb Code   336  main.o(.text)
-    ImageHandle                              0x080002dd   Thumb Code   142  main.o(.text)
-    camera_refresh                           0x0800036b   Thumb Code   322  main.o(.text)
-    system_init                              0x080004ad   Thumb Code   520  main.o(.text)
-    main                                     0x080006b5   Thumb Code   190  main.o(.text)
+    img_display                              0x0800018d   Thumb Code   312  main.o(.text)
+    ImageHandle                              0x080002c5   Thumb Code   142  main.o(.text)
+    camera_refresh                           0x08000353   Thumb Code   326  main.o(.text)
+    system_init                              0x08000499   Thumb Code   520  main.o(.text)
+    main                                     0x080006a1   Thumb Code   210  main.o(.text)
     CreateRectLink                           0x080007c9   Thumb Code    66  img.o(.text)
     InitRectLink                             0x0800080b   Thumb Code    36  img.o(.text)
     DeRectLink                               0x0800082f   Thumb Code    34  img.o(.text)
@@ -1184,7 +1184,7 @@ Image component sizes
      12872        246       2660          4         10          0   ili93xx.o
       4444         96          8          2          0          0   img.o
        128         18          0          0          0          0   led.o
-      1704        282          0          1          0          0   main.o
+      1704        284          0          1          0          0   main.o
        272         28          0          0          0          0   memmgr.o
        844         44        236          0          0          0   ov7670.o
        644         22          0          0          0          0   sccb.o
@@ -1198,7 +1198,7 @@ Image component sizes
        288         38          0          1          0          0   wdg.o
 
     ----------------------------------------------------------------------
-     27460       2168       3528        372      20088          0   Object Totals
+     27460       2170       3528        372      20088          0   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          2          0          2          2          6          0   (incl. Padding)
 
@@ -1272,9 +1272,9 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     34140       2464       3672        384      20088      63352   Grand Totals
-     34140       2464       3672        120      20088      63352   ELF Image Totals (compressed)
-     34140       2464       3672        120          0          0   ROM Totals
+     34140       2466       3672        384      20088      63332   Grand Totals
+     34140       2466       3672        120      20088      63332   ELF Image Totals (compressed)
+     34140       2466       3672        120          0          0   ROM Totals
 
 ==============================================================================
 
