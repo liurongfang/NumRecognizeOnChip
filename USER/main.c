@@ -5,9 +5,40 @@
 
 #include "main.h"
 
+//定义LCD屏幕尺寸
+#define LCD_H 320
+#define LCD_W 240
+
+//定义获取图像的尺寸
+#define IMG_H 60
+#define IMG_W 80
+
+#define NUM 5
+#define TZ  13
+
+#define THRES 40  	  
+
+extern u8 ov_sta;	//在exit.c里面定义，状态
+extern u8 ov_frame;	//在timer.c里面定义，帧率
+
+u8 thres = 60;
+
+//函数定义		 
+u16 system_init(void);		//系统启动时的初始化
+void camera_refresh(u8 **img, u16 yScale, u16 xScale);		//更新LCD显示
+void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode);	//从数组更新图像到LCD
+void print2serial(u8 **img, u16 height, u16 width);			//输出到串口
+u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num);		//在这里完成图像处理的相关操作
+
 //测试用，等待6s
 void wait()
 {
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
+	delay_ms(1000);
 	delay_ms(1000);
 	delay_ms(1000);
 	delay_ms(1000);
@@ -19,9 +50,10 @@ void wait()
 //主函数	  
 int main(void)
 {	
-	u8 i = 0;
+	u8 i;
 	u8 **img =  NULL;
 	u8 **tz = NULL;
+	u8 *result = NULL;
 
 	
 	//等待系统启动完成
@@ -32,8 +64,9 @@ int main(void)
 	{
 		img = alloc_mem2d_u8( IMG_H, IMG_W);
 		tz = alloc_mem2d_u8( NUM, TZ);
+		result = (u8 *)malloc((NUM + 1) * sizeof(u8));
 
-		//OV7670_Special_Effects(1);		//1:负片效果
+		//OV7670_Special_Effects(1);		//1:负片效果,0:正常
 		  
 		//back:
 		//开始工作						 	 
@@ -53,38 +86,42 @@ int main(void)
 				if (KEY0 == 0)
 					break;
 			}
+
 		}
 	
 	
-		LCD_ShowString(40,50,200,200,16,"Continue...");
+		LCD_ShowString(40,50,200,200,16,"Will Continue...");
 	
 		thres  = GlobalThreshold(img, IMG_H, IMG_W)>>1;		//经验值，阈值的1/2分离较好
 		printf("galobal thres:%d\r\n", thres);
-//		thres = otsuThreshold(img, IMG_H, IMG_W);
-//		printf("ostu thres:%d", thres);
-		img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 2);  //显示在屏幕中间
-//		print2serial(img, IMG_H, IMG_W);				   //测试用，不可去掉
+
+		img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 0);  //显示在屏幕中间，灰度图0：原样显示
+//		print2serial(img, IMG_H, IMG_W);				   //输出灰度图到串口，测试用
 	
 		//wait();
 	
-		//图像处理
+		//图像处理，传入灰度图
 		ImageHandle(tz, img, IMG_H, IMG_W, NUM);
 		//while(KEY1 == 0);
 		//goto back;
+
+		//开始识别
+		Recognize(result, tz, NUM, TZ);
 	
-	
-	
-//		//开始识别
-//		LCD_Fill(1,1,239,200,WHITE);
-//		POINT_COLOR = BLUE;		//设置提示信息为蓝色
-//		LCD_ShowString(40,50,200,200,16,"Start Recognize!");
-//		delay_ms(20000);
-//		LCD_Fill(1,1,239,319,WHITE);
+		//输出识别结果
+		LCD_Fill(1,1,239,200,WHITE);
+		POINT_COLOR = BLUE;		//设置提示信息为蓝色
+		LCD_ShowString(40,50,200,200,16,"Is Recognize...");
+		LCD_ShowString(40,90,200,200,16,"Recognize Result:");
+		LCD_ShowString(40,120,200,200,16,result);
+
+		wait();
+		LCD_Fill(1,1,239,319,WHITE);
 	
 		//释放内存
 		delete_mem2d_u8( img,IMG_H, IMG_W);
 		delete_mem2d_u8( tz, NUM, TZ);
-
+		free(result);
 	}
 	
 	return 0;	   
@@ -159,9 +196,9 @@ void camera_refresh(u8 **img, u16 yScale, u16 xScale)
 		OV7670_RCK=1;  
 
 		//循环读取240x320个像素点
-		for (j=0; j<240; j++)
+		for (i = 239; i /*>=0*/; i--)
 		{
-			for (i = 0; i<320; i++)
+			for (j=0; j<320; j++)
 			{
 				GPIOB->CRL=0X88888888;	 //设置IO口为输入状态
 				
@@ -186,13 +223,13 @@ void camera_refresh(u8 **img, u16 yScale, u16 xScale)
 						
 				color= color_y + color_u + color_v;  		//显示
 								 	 
-				if (i != 319)	   //测试发现第319行全是白色的，不知道怎么回事，所以就不要了，用318行的代替
+				if (j != 319)	   //测试发现第319行全是白色的，不知道怎么回事，所以就不要了，用318行的代替
 				{
-					img[i/yScale][j/xScale] = color_gray;	//送到图像数组，上到下，左到右存储,加1减1是补偿精度，否则img[IMG_H-1]这一行没有
+					img[i/yScale][j/xScale] = color_gray;	//送到图像数组，上到下，左到右存储
 				}
 				//if (i >316) printf("c%d:%d ",i,color_gray);  //测试用
 
-				LCD_WR_DATA(~color);
+				LCD_WR_DATA(color);
 			} 
 		}
 		//printf("#\n");		   //测试用
@@ -207,7 +244,7 @@ void camera_refresh(u8 **img, u16 yScale, u16 xScale)
 	} 
 }
 
-//从数组更新图像到LCD
+//从数组更新图像到LCD,传入灰度图（0：正常显示，1：二值显示）或者二值图（2：二值显示）
 void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 {
 	u16 i,j;
@@ -215,7 +252,7 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 
 //	LCD_Fill( 0, 0, 239, 319,WHITE);		//sxy,exy
 	//LCD_Scan_Dir(U2D_L2R);		//从上到下,从左到右
-	LCD_Scan_Dir(DFT_SCAN_DIR);	//恢复默认扫描方向 
+	LCD_Scan_Dir(DFT_SCAN_DIR);	//恢复默认扫描方向,从左到右，从上到下 
 	
 
 //	for(i=sy;i<=ey;i++)
@@ -225,7 +262,7 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 //		for(j=0;j<xlen;j++)LCD_WR_DATA(color);	//设置光标位置 	    
 //	}
 
-	if (mode == 1)
+	if (mode == 0)
 	{		
 		for (i = 0; i<height; i++)
 		{
@@ -240,6 +277,28 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 				color |= img[i][j]>>2;		//6
 				color <<=5;
 				color |= img[i][j]>>3;		//5
+
+//				if (img[i][j] > thres)
+//				{
+//					color = 0xffff;
+//				}
+//				else
+//				{
+//					color = 0x0000;
+//				}
+	
+				LCD_WR_DATA(color);
+			}
+		}
+	}
+	else
+	if (mode == 1)
+	{
+		for (i = 0; i<height; i++)
+		{
+			for (j = 0; j<width; j++)	   //灰度图二值化显示
+			{
+				color = (img[i][j]>thres)?0xffff:0x0;
 	
 				LCD_WR_DATA(color);
 			}
@@ -250,37 +309,9 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 	{
 		for (i = 0; i<height; i++)
 		{
-			for (j = 0; j<width; j++)	   //二值化显示
+			for (j = 0; j<width; j++)	   //二值图二值化显示
 			{
-				if (img[i][j] > thres)
-				{
-					color = 0xffff;
-				}
-				else
-				{
-					color = 0x0000;
-				}
-	
-				LCD_WR_DATA(color);
-			}
-		}
-	}
-	else
-	if (mode == 3)
-	{
-		for (i = 0; i<height; i++)
-		{
-			for (j = 0; j<width; j++)	   //二值化显示
-			{
-				if (img[i][j] == 1)
-				{
-					color = 0xffff;
-				}
-				else
-				if (img[i][j] == 0)
-				{
-					color = 0x0000;
-				}
+				color = img[i][j]?0xffff:0x0;
 	
 				LCD_WR_DATA(color);
 			}
@@ -324,45 +355,51 @@ u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
 
 	//预处理
 	BinaryImg(img, img, srcHeight, srcWidth, thres);		//100是阈值，二值化之后是黑块白底
-	//floodfill(img, srcHeight, srcWidth);					//填充黑块旁边的白色区域
-	InvertImg(img, img , srcHeight, srcWidth);				//反相，变成黑字白块
+	//InvertImg(img, img , srcHeight, srcWidth);				//选用反相，变成前景白色，背景黑色
+
+	//输出，测试用
+	LCD_ShowString(40,50,200,200,16,"In ImageHandle().");
+	img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 2);	
+	print2serial(img, srcHeight, srcWidth);
 
 	//去除小块的噪声
-	img_display(img, srcHeight, srcWidth, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 3);
-	print2serial(img, srcHeight, srcWidth);
 	
-	//开始
 	//倾斜度矫正
 	//SlopeAdjust(img, img, srcHeight, srcWidth);
 
+	//细化图像
+	ThinnerRosenfeld(img, srcHeight, srcWidth);
+
 	//分离出字符所在的矩形区域
-//	srcRect = DetectRect(img, srcHeight, srcWidth);
-//	//计算矩形区域长宽
-//	h = srcRect.Y2 - srcRect.Y1 + 1;
-//	w = srcRect.X2 - srcRect.X1 + 1;
-//	dstRect.X2 = w;
-//	dstRect.Y2 = h;
-//	img1 = alloc_mem2d_u8(h, w);			//用来存分离出的字符矩形区域
-//	CopyImg(img1, img, dstRect, srcRect);		
-//
-//	//分离出单个字符所在的矩形区域,rlink保存
-//	DetectNum(img1, h, w, rlink, num);
-//
-//	ShowRectLink(rlink);	//输出到串口助手去了
-//
-//	
-//	//紧缩重排，字符尺寸归一化
-//	StdAlignImg(alignImg, img1, STD_H, num*STD_W, h, w, rlink, num);
-//	
-//	//img_display(alignImg, srcHeight, srcWidth, 0, 0, 1);
-//	ShowRectLink(rlink);	//显示尺寸归一化之后的矩形链表
-//	
-//	//特征提取
-//	TZTQ13(tz, alignImg, STD_H, num*STD_W, rlink, num);		   //13点特征
+	srcRect = DetectRect(img, srcHeight, srcWidth);
+
+	//计算矩形区域长宽
+	h = srcRect.Y2 - srcRect.Y1 + 1;
+	w = srcRect.X2 - srcRect.X1 + 1;
+	dstRect.X2 = w;
+	dstRect.Y2 = h;
+	img1 = alloc_mem2d_u8(h, w);			//用来存分离出的字符矩形区域，根据分离出的矩形大小确定
+	//拷贝得到的矩形区域给img1
+	CopyImg(img1, img, dstRect, srcRect);		
+
+	//分离出单个字符所在的矩形区域,rlink保存
+	DetectNum(img1, h, w, rlink, num);
+
+	//输出获得的矩形链表到串口，测试用
+	ShowRectLink(rlink);	
+	
+	//紧缩重排，字符尺寸归一化
+	StdAlignImg(alignImg, img1, STD_H, num*STD_W, h, w, rlink, num);
+	
+	//输出获得的矩形链表到串口，测试用
+	ShowRectLink(rlink);	//显示尺寸归一化之后的矩形链表
+	
+	//特征提取
+	TZTQ13(tz, alignImg, STD_H, num*STD_W, rlink, num);		   //13点特征
 
 	//释放内存
 	delete_mem2d_u8(alignImg, STD_H, num*STD_W);
-//	delete_mem2d_u8(img1, h, w);					//释放源图像
+	delete_mem2d_u8(img1, h, w);
 	DeRectLink(rlink);
 
 	return 0;

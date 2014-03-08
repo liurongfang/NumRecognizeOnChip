@@ -5,13 +5,16 @@
 *	联系作者请发邮件至：752444247@qq.com
 **************************************************************************************/
 
-#ifndef _MY_RECOG_
-#define _MY_RECOG_
+#ifndef _MY_RECOG_H_
+#define _MY_RECOG_H_
 
 #include "base.h"
-#include <math.h>
+#include "memmgr.h"
+
+//将特征归一化到0-1之间
+void TZ_Std(double **tzDb,u8 **tz, u16 num, u16 tzCount);
 
 //拟采用闵可夫斯基向量距离进行试识别（曼哈顿距离与欧氏距离）
-void MinkowskiMetric(u8 *result, u8 **tzDb, u16 num, u16 tzCount);
+void Recognize(u8 *result, u8 **tz, u16 num, u16 tzCount);
 
 #endif

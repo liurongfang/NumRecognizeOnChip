@@ -5,13 +5,19 @@
 *	联系作者请发邮件至：752444247@qq.com
 **************************************************************************************/
 
-#ifndef _MY_BASE_
-#define _MY_BASE_
+#ifndef _MY_BASE_H_
+#define _MY_BASE_H_
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
 #include <stm32f10x_type.h>
+
+//与平台有关，用于测试
+#include "lcd.h"
+#include "usart.h"
+#include "usmart.h"
 
 //断言，错误就直接返回
 //#define assert(x) ( (x)?(.):(return),)

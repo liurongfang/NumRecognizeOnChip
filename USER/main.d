@@ -22,4 +22,6 @@ main.o: ..\USMART\usmart.h
 main.o: ..\USMART\usmart_str.h
 main.o: img.h
 main.o: base.h
+main.o: D:\Program Files (x86)\KeiluV4\ARM\RV31\INC\math.h
+main.o: recog.h
 main.o: memmgr.h

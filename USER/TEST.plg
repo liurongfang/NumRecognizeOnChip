@@ -8,74 +8,34 @@ Project File Date:  03/02/2014
 
 <h2>Output:</h2>
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(116): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
+main.c(188): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c(350): warning:  #177-D: variable "img1" was declared but never referenced
 main.c:         u8 **img1 = NULL;
 main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
+main.c(353): warning:  #177-D: variable "srcRect" was declared but never referenced
 main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
 main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
+main.c(354): warning:  #177-D: variable "dstRect" was declared but never referenced
 main.c:         DRect dstRect = {0, 0, 0, 0};
 main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
+main.c(355): warning:  #177-D: variable "h" was declared but never referenced
 main.c:         u16 h = 0, w = 0;                       //图像的宽高
 main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
+main.c(355): warning:  #177-D: variable "w" was declared but never referenced
 main.c:         u16 h = 0, w = 0;                       //图像的宽高
 main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
+main.c: main.c: 7 warnings, 0 errors
+main.c - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=34144 RO-data=3676 RW-data=384 ZI-data=20088  
+Program Size: Code=33904 RO-data=3676 RW-data=384 ZI-data=20088  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
-compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
-main.c:         return 0;          
-main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
-Build target 'Target 1'
-assembling STM32F10x.s...
-compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
-main.c:         return 0;          
-main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
 compiling img.c...
 img.c(813): warning:  #177-D: variable "i" was declared but never referenced
 img.c:          u16 i,j,count;
@@ -86,7 +46,597 @@ img.c:                ^
 img.c(813): warning:  #177-D: variable "count" was declared but never referenced
 img.c:          u16 i,j,count;
 img.c:                  ^
-img.c: img.c: 3 warnings, 0 errors
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 a[5] = {0, -1, 1, 0, 0};
+img.c:                     ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 b[5] = {0, 0, 0, 1, -1};
+img.c:                              ^
+img.c(895): error:  #20: identifier "lx" is undefined
+img.c:       size = (u32 )lx * (u32 )ly;
+img.c:                    ^
+img.c(895): error:  #20: identifier "ly" is undefined
+img.c:       size = (u32 )lx * (u32 )ly;
+img.c:                               ^
+img.c: img.c: 5 warnings, 2 errors
+img.c - 2 Error(s), 5 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(116): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(188): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c: main.c: 2 warnings, 0 errors
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                ^
+img.c(813): warning:  #177-D: variable "count" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                  ^
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 a[5] = {0, -1, 1, 0, 0};
+img.c:                     ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 b[5] = {0, 0, 0, 1, -1};
+img.c:                              ^
+img.c(895): error:  #20: identifier "lx" is undefined
+img.c:       size = (u32 )lx * (u32 )ly;
+img.c:                    ^
+img.c(895): error:  #20: identifier "ly" is undefined
+img.c:       size = (u32 )lx * (u32 )ly;
+img.c:                               ^
+img.c: img.c: 5 warnings, 2 errors
+Target not created
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                ^
+img.c(813): warning:  #177-D: variable "count" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                  ^
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 a[5] = {0, -1, 1, 0, 0};
+img.c:                     ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 b[5] = {0, 0, 0, 1, -1};
+img.c:                              ^
+img.c: img.c: 5 warnings, 0 errors
+img.c - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=35172 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                ^
+img.c(813): warning:  #177-D: variable "count" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                  ^
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 a[5] = {0, -1, 1, 0, 0};
+img.c:                     ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       u8 b[5] = {0, 0, 0, 1, -1};
+img.c:                              ^
+img.c: img.c: 5 warnings, 0 errors
+img.c - 0 Error(s), 5 Warning(s).
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                ^
+img.c(813): warning:  #177-D: variable "count" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                  ^
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char a[5] = {0, -1, 1, 0, 0};
+img.c:                       ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char b[5] = {0, 0, 0, 1, -1};
+img.c:                                ^
+img.c: img.c: 5 warnings, 0 errors
+img.c - 0 Error(s), 5 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=35156 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                ^
+img.c(813): warning:  #177-D: variable "count" was declared but never referenced
+img.c:          u16 i,j,count;
+img.c:                  ^
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char a[5] = {0, -1, 1, 0, 0};
+img.c:                       ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char b[5] = {0, 0, 0, 1, -1};
+img.c:                                ^
+img.c: img.c: 5 warnings, 0 errors
+img.c - 0 Error(s), 5 Warning(s).
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j;
+img.c:                ^
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char a[5] = {0, -1, 1, 0, 0};
+img.c:                       ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char b[5] = {0, 0, 0, 1, -1};
+img.c:                                ^
+img.c: img.c: 4 warnings, 0 errors
+img.c - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=35156 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j;
+img.c:                ^
+img.c(889): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char a[5] = {0, -1, 1, 0, 0};
+img.c:                       ^
+img.c(890): warning:  #68-D: integer conversion resulted in a change of sign
+img.c:       char b[5] = {0, 0, 0, 1, -1};
+img.c:                                ^
+img.c: img.c: 4 warnings, 0 errors
+img.c - 0 Error(s), 4 Warning(s).
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j;
+img.c:                ^
+img.c: img.c: 2 warnings, 0 errors
+img.c - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=35156 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling img.c...
+img.c(813): warning:  #177-D: variable "i" was declared but never referenced
+img.c:          u16 i,j;
+img.c:              ^
+img.c(813): warning:  #177-D: variable "j" was declared but never referenced
+img.c:          u16 i,j;
+img.c:                ^
+img.c: img.c: 2 warnings, 0 errors
+img.c - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c(116): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(188): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c: main.c: 2 warnings, 0 errors
+main.c - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+linking...
+Program Size: Code=30312 RO-data=3528 RW-data=380 ZI-data=20084  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(116): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(188): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c: main.c: 2 warnings, 0 errors
+main.c - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c(58): warning:  #223-D: function "alloc_mem2d_u8" declared implicitly
+main.c:                 img = alloc_mem2d_u8( IMG_H, IMG_W);
+main.c:                       ^
+main.c(58): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:                 img = alloc_mem2d_u8( IMG_H, IMG_W);
+main.c:                     ^
+main.c(59): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:                 tz = alloc_mem2d_u8( NUM, TZ);
+main.c:                    ^
+main.c(111): warning:  #223-D: function "delete_mem2d_u8" declared implicitly
+main.c:                 delete_mem2d_u8( img,IMG_H, IMG_W);
+main.c:                 ^
+main.c(116): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(188): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c(342): warning:  #223-D: function "alloc_mem2d_u8" declared implicitly
+main.c:         alignImg = alloc_mem2d_u8(STD_H, num*STD_W);    //num -> 1 ，用来存标准尺寸字符，8x16
+main.c:                    ^
+main.c(342): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:         alignImg = alloc_mem2d_u8(STD_H, num*STD_W);    //num -> 1 ，用来存标准尺寸字符，8x16
+main.c:                  ^
+main.c(369): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:         img1 = alloc_mem2d_u8(h, w);                    //用来存分离出的字符矩形区域，根据分离出的矩形大小确定
+main.c:              ^
+main.c(388): warning:  #223-D: function "delete_mem2d_u8" declared implicitly
+main.c:         delete_mem2d_u8(alignImg, STD_H, num*STD_W);
+main.c:         ^
+main.c: main.c: 6 warnings, 4 errors
+main.c - 4 Error(s), 6 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(58): warning:  #223-D: function "alloc_mem2d_u8" declared implicitly
+main.c:                 img = alloc_mem2d_u8( IMG_H, IMG_W);
+main.c:                       ^
+main.c(58): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:                 img = alloc_mem2d_u8( IMG_H, IMG_W);
+main.c:                     ^
+main.c(59): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:                 tz = alloc_mem2d_u8( NUM, TZ);
+main.c:                    ^
+main.c(111): warning:  #223-D: function "delete_mem2d_u8" declared implicitly
+main.c:                 delete_mem2d_u8( img,IMG_H, IMG_W);
+main.c:                 ^
+main.c(116): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(188): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c(342): warning:  #223-D: function "alloc_mem2d_u8" declared implicitly
+main.c:         alignImg = alloc_mem2d_u8(STD_H, num*STD_W);    //num -> 1 ，用来存标准尺寸字符，8x16
+main.c:                    ^
+main.c(342): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:         alignImg = alloc_mem2d_u8(STD_H, num*STD_W);    //num -> 1 ，用来存标准尺寸字符，8x16
+main.c:                  ^
+main.c(369): error:  #513: a value of type "int" cannot be assigned to an entity of type "u8 **"
+main.c:         img1 = alloc_mem2d_u8(h, w);                    //用来存分离出的字符矩形区域，根据分离出的矩形大小确定
+main.c:              ^
+main.c(388): warning:  #223-D: function "delete_mem2d_u8" declared implicitly
+main.c:         delete_mem2d_u8(alignImg, STD_H, num*STD_W);
+main.c:         ^
+main.c: main.c: 6 warnings, 4 errors
+compiling img.c...
+Target not created
+compiling recog.c...
+recog.c(38): error:  #147-D: declaration is incompatible with "void Recognize(u8 *, double **, u16, u16)" (declared at line 17 of "recog.h")
+recog.c:   void Recognize(u8 *result, u8 **tz, u16 num, u16 tzCount)
+recog.c:        ^
+recog.c(44): warning:  #223-D: function "alloc_mem_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem_dbl(5, 13);
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem_dbl(5, 13);
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c: recog.c: 2 warnings, 3 errors
+recog.c - 3 Error(s), 2 Warning(s).
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem_dbl(5, 13);
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem_dbl(5, 13);
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c: recog.c: 2 warnings, 2 errors
+recog.c - 2 Error(s), 2 Warning(s).
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem_dbl(5, 13);
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem_dbl(5, 13);
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c: recog.c: 2 warnings, 2 errors
+recog.c - 2 Error(s), 2 Warning(s).
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c(86): warning:  #223-D: function "detect_mem2d_dbl" declared implicitly
+recog.c:        detect_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+recog.c - 2 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(189): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c(361): warning:  #167-D: argument of type "u8 **" is incompatible with parameter of type "void **"
+main.c:         ThinnerRosenfeld(img, srcHeight, srcWidth);
+main.c:                          ^
+main.c: main.c: 3 warnings, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c(86): warning:  #223-D: function "detect_mem2d_dbl" declared implicitly
+recog.c:        detect_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+Target not created
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c(86): warning:  #223-D: function "detect_mem2d_dbl" declared implicitly
+recog.c:        detect_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+recog.c - 2 Error(s), 3 Warning(s).
+compiling memmgr.c...
+memmgr.c(81): error:  #118: a void function may not return a value
+memmgr.c:       return 0;
+memmgr.c:              ^
+memmgr.c: memmgr.c: 0 warnings, 1 error
+memmgr.c - 1 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(189): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c(361): warning:  #167-D: argument of type "u8 **" is incompatible with parameter of type "void **"
+main.c:         ThinnerRosenfeld(img, srcHeight, srcWidth);
+main.c:                          ^
+main.c: main.c: 3 warnings, 0 errors
+compiling memmgr.c...
+memmgr.c(81): error:  #118: a void function may not return a value
+memmgr.c:       return 0;
+memmgr.c:              ^
+memmgr.c: memmgr.c: 0 warnings, 1 error
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c(86): warning:  #223-D: function "detect_mem2d_dbl" declared implicitly
+recog.c:        detect_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+Target not created
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                        {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                        ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                        };//标准特征矩阵
+recog.c:                                                                        ^
+recog.c(86): warning:  #223-D: function "delete_mem2d_dbl" declared implicitly
+recog.c:        delete_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+recog.c - 2 Error(s), 3 Warning(s).
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                };//标准特征矩阵
+recog.c:                                                                ^
+recog.c(86): warning:  #223-D: function "delete_mem2d_dbl" declared implicitly
+recog.c:        delete_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+recog.c - 2 Error(s), 3 Warning(s).
+Build target 'Target 1'
+compiling memmgr.c...
+memmgr.c(81): error:  #118: a void function may not return a value
+memmgr.c:       return 0;
+memmgr.c:              ^
+memmgr.c: memmgr.c: 0 warnings, 1 error
+compiling recog.c...
+recog.c(44): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(44): error:  #144: a value of type "int" cannot be used to initialize an entity of type "double **"
+recog.c:        double **tzDb = alloc_mem2d_dbl(num, tzCount );
+recog.c:                        ^
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                };//标准特征矩阵
+recog.c:                                                                ^
+recog.c(86): warning:  #223-D: function "delete_mem2d_dbl" declared implicitly
+recog.c:        delete_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+Target not created
+compiling recog.c...
+recog.c(46): error:  #67: expected a "}"
+recog.c:                                                                {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+recog.c:                                                                ^
+recog.c(50): warning:  #12-D: parsing restarts here after previous syntax error
+recog.c:                                                                };//标准特征矩阵
+recog.c:                                                                ^
+recog.c(52): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        tzDb = alloc_mem2d_dbl(num, tzCount);
+recog.c:               ^
+recog.c(52): error:  #513: a value of type "int" cannot be assigned to an entity of type "double **"
+recog.c:        tzDb = alloc_mem2d_dbl(num, tzCount);
+recog.c:             ^
+recog.c(88): warning:  #223-D: function "delete_mem2d_dbl" declared implicitly
+recog.c:        delete_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 3 warnings, 2 errors
+recog.c - 2 Error(s), 3 Warning(s).
+compiling recog.c...
+recog.c(52): warning:  #223-D: function "alloc_mem2d_dbl" declared implicitly
+recog.c:        tzDb = alloc_mem2d_dbl(num, tzCount);
+recog.c:               ^
+recog.c(52): error:  #513: a value of type "int" cannot be assigned to an entity of type "double **"
+recog.c:        tzDb = alloc_mem2d_dbl(num, tzCount);
+recog.c:             ^
+recog.c(88): warning:  #223-D: function "delete_mem2d_dbl" declared implicitly
+recog.c:        delete_mem2d_dbl(tzDb, num, tzCount);
+recog.c:        ^
+recog.c: recog.c: 2 warnings, 1 error
+recog.c - 1 Error(s), 2 Warning(s).
+compiling recog.c...
+recog.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling memmgr.c...
+memmgr.c(81): error:  #118: a void function may not return a value
+memmgr.c:       return 0;
+memmgr.c:              ^
+memmgr.c: memmgr.c: 0 warnings, 1 error
+Target not created
+compiling recog.c...
+recog.c - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(189): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c(361): warning:  #167-D: argument of type "u8 **" is incompatible with parameter of type "void **"
+main.c:         ThinnerRosenfeld(img, srcHeight, srcWidth);
+main.c:                          ^
+main.c: main.c: 3 warnings, 0 errors
+compiling img.c...
+compiling memmgr.c...
+memmgr.c(81): error:  #118: a void function may not return a value
+memmgr.c:       return 0;
+memmgr.c:              ^
+memmgr.c: memmgr.c: 0 warnings, 1 error
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+Target not created
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(189): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c(361): warning:  #167-D: argument of type "u8 **" is incompatible with parameter of type "void **"
+main.c:         ThinnerRosenfeld(img, srcHeight, srcWidth);
+main.c:                          ^
+main.c: main.c: 3 warnings, 0 errors
+compiling img.c...
 compiling memmgr.c...
 compiling recog.c...
 compiling delay.c...
@@ -107,68 +657,40 @@ compiling usmart.c...
 compiling usmart_config.c...
 compiling usmart_str.c...
 linking...
-Program Size: Code=34164 RO-data=3672 RW-data=384 ZI-data=20088  
+Program Size: Code=29940 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
-"TEST.axf" - 0 Error(s), 9 Warning(s).
+"TEST.axf" - 0 Error(s), 3 Warning(s).
+compiling img.c...
+img.c(488): error:  #147-D: declaration is incompatible with "void ThinnerRosenfeld(void **, u16, u16)" (declared at line 101 of "img.h")
+img.c:   void ThinnerRosenfeld(u8 **image, u16 lx, u16 ly)
+img.c:        ^
+img.c: img.c: 0 warnings, 1 error
+img.c - 1 Error(s), 0 Warning(s).
+Build target 'Target 1'
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(117): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
-Build target 'Target 1'
+main.c(189): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c: main.c: 2 warnings, 0 errors
+compiling img.c...
 linking...
-Program Size: Code=34152 RO-data=3676 RW-data=384 ZI-data=20088  
+Program Size: Code=29940 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
-"TEST.axf" - 0 Error(s), 0 Warning(s).
+"TEST.axf" - 0 Error(s), 2 Warning(s).
 Build target 'Target 1'
 assembling STM32F10x.s...
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(117): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
+main.c(189): warning:  #186-D: pointless comparison of unsigned integer with zero
+main.c:                 for (i = 239; i>=0; i--)
+main.c:                                ^
+main.c: main.c: 2 warnings, 0 errors
 compiling img.c...
-img.c(813): warning:  #177-D: variable "i" was declared but never referenced
-img.c:          u16 i,j,count;
-img.c:              ^
-img.c(813): warning:  #177-D: variable "j" was declared but never referenced
-img.c:          u16 i,j,count;
-img.c:                ^
-img.c(813): warning:  #177-D: variable "count" was declared but never referenced
-img.c:          u16 i,j,count;
-img.c:                  ^
-img.c: img.c: 3 warnings, 0 errors
 compiling memmgr.c...
 compiling recog.c...
 compiling delay.c...
@@ -189,136 +711,446 @@ compiling usmart.c...
 compiling usmart_config.c...
 compiling usmart_str.c...
 linking...
-Program Size: Code=34152 RO-data=3676 RW-data=384 ZI-data=20088  
+Program Size: Code=29940 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
-"TEST.axf" - 0 Error(s), 9 Warning(s).
+"TEST.axf" - 0 Error(s), 2 Warning(s).
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(117): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
+main.c(227): warning:  #111-D: statement is unreachable
+main.c:                 OV7670_CS=1;            //关闭片选使能                                   
+main.c:                 ^
+main.c: main.c: 2 warnings, 0 errors
+main.c - 0 Error(s), 2 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=34144 RO-data=3676 RW-data=384 ZI-data=20088  
+Program Size: Code=29940 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(117): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
+main.c(227): warning:  #111-D: statement is unreachable
+main.c:                 OV7670_CS=1;            //关闭片选使能                                   
+main.c:                 ^
+main.c: main.c: 2 warnings, 0 errors
+main.c - 0 Error(s), 2 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=34152 RO-data=3676 RW-data=384 ZI-data=20088  
+Program Size: Code=30016 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(117): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=34156 RO-data=3672 RW-data=384 ZI-data=20088  
+Program Size: Code=30016 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(117): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=34136 RO-data=3676 RW-data=384 ZI-data=20088  
+Program Size: Code=30016 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
 compiling main.c...
-main.c(90): warning:  #111-D: statement is unreachable
+main.c(117): warning:  #111-D: statement is unreachable
 main.c:         return 0;          
 main.c:         ^
-main.c(315): warning:  #177-D: variable "img1" was declared but never referenced
-main.c:         u8 **img1 = NULL;
-main.c:              ^
-main.c(318): warning:  #177-D: variable "srcRect" was declared but never referenced
-main.c:         DRect srcRect = {0, 0, 0, 0};           //用来保存数字所在的矩形区域
-main.c:               ^
-main.c(319): warning:  #177-D: variable "dstRect" was declared but never referenced
-main.c:         DRect dstRect = {0, 0, 0, 0};
-main.c:               ^
-main.c(320): warning:  #177-D: variable "h" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:             ^
-main.c(320): warning:  #177-D: variable "w" was declared but never referenced
-main.c:         u16 h = 0, w = 0;                       //图像的宽高
-main.c:                    ^
-main.c: main.c: 6 warnings, 0 errors
-main.c - 0 Error(s), 6 Warning(s).
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=34140 RO-data=3672 RW-data=384 ZI-data=20088  
+Program Size: Code=30016 RO-data=3528 RW-data=380 ZI-data=20084  
 FromELF: creating hex file...
 "TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=30016 RO-data=3528 RW-data=380 ZI-data=20084  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=30016 RO-data=3528 RW-data=380 ZI-data=20084  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=30016 RO-data=3528 RW-data=380 ZI-data=20084  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(117): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(103): warning:  #223-D: function "Recognize" declared implicitly
+main.c:                 Recognize(result, tz, NUM, TZ);
+main.c:                 ^
+main.c(110): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+main.c:                 LCD_ShowString(40,110,200,200,16,result);
+main.c:                                                  ^
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(47): warning:  #177-D: variable "j" was declared but never referenced
+main.c:         u8 i, j;
+main.c:               ^
+main.c: main.c: 4 warnings, 0 errors
+main.c - 0 Error(s), 4 Warning(s).
+compiling main.c...
+main.c(103): warning:  #223-D: function "Recognize" declared implicitly
+main.c:                 Recognize(result, tz, NUM, TZ);
+main.c:                 ^
+main.c(110): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+main.c:                 LCD_ShowString(40,110,200,200,16,result);
+main.c:                                                  ^
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(47): warning:  #177-D: variable "j" was declared but never referenced
+main.c:         u8 i, j;
+main.c:               ^
+main.c: main.c: 4 warnings, 0 errors
+main.c - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+compiling recog.c...
+recog.c(38): error:  #147-D: declaration is incompatible with "void Recognize(u8 *, u8 **, u16, u16)" (declared at line 18 of "recog.h")
+recog.c:   void Recognize(char *result, u8 **tz, u16 num, u16 tzCount)
+recog.c:        ^
+recog.c: recog.c: 0 warnings, 1 error
+Target not created
+Build target 'Target 1'
+compiling recog.c...
+linking...
+Program Size: Code=33920 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(103): warning:  #223-D: function "Recognize" declared implicitly
+main.c:                 Recognize(result, tz, NUM, TZ);
+main.c:                 ^
+main.c(110): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+main.c:                 LCD_ShowString(40,110,200,200,16,result);
+main.c:                                                  ^
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(47): warning:  #177-D: variable "j" was declared but never referenced
+main.c:         u8 i, j;
+main.c:               ^
+main.c: main.c: 4 warnings, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+linking...
+Program Size: Code=33920 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 4 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(110): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "u8 *"
+main.c:                 LCD_ShowString(40,110,200,200,16,result);
+main.c:                                                  ^
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(47): warning:  #177-D: variable "j" was declared but never referenced
+main.c:         u8 i, j;
+main.c:               ^
+main.c: main.c: 3 warnings, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+linking...
+Program Size: Code=33920 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 3 Warning(s).
+compiling main.c...
+main.c(103): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *"
+main.c:                 Recognize(result, tz, NUM, TZ);
+main.c:                           ^
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(47): warning:  #177-D: variable "j" was declared but never referenced
+main.c:         u8 i, j;
+main.c:               ^
+main.c: main.c: 3 warnings, 0 errors
+main.c - 0 Error(s), 3 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c(47): warning:  #177-D: variable "j" was declared but never referenced
+main.c:         u8 i, j;
+main.c:               ^
+main.c: main.c: 2 warnings, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+linking...
+Program Size: Code=33920 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 2 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+linking...
+Program Size: Code=33920 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 1 Warning(s).
+compiling main.c...
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33944 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(121): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: Code=33924 RO-data=3672 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+main.c(127): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+main.c - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(127): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+linking...
+Program Size: Code=33968 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(127): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+creating Library...
+"TEST.lib" - 0 Error(s), 1 Warning(s).
+Build target 'Target 1'
+assembling STM32F10x.s...
+compiling main.c...
+main.c(127): warning:  #111-D: statement is unreachable
+main.c:         return 0;          
+main.c:         ^
+main.c: main.c: 1 warning, 0 errors
+compiling img.c...
+compiling memmgr.c...
+compiling recog.c...
+compiling delay.c...
+compiling sys.c...
+compiling usart.c...
+compiling led.c...
+compiling key.c...
+compiling exti.c...
+compiling wdg.c...
+compiling timer.c...
+compiling ILI93xx.c...
+compiling 24cxx.c...
+compiling myiic.c...
+compiling touch.c...
+compiling ov7670.c...
+compiling sccb.c...
+compiling usmart.c...
+compiling usmart_config.c...
+compiling usmart_str.c...
+linking...
+Program Size: Code=33968 RO-data=3676 RW-data=384 ZI-data=20088  
+FromELF: creating hex file...
+"TEST.axf" - 0 Error(s), 1 Warning(s).

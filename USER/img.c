@@ -5,14 +5,11 @@
 *	联系作者请发邮件至：752444247@qq.com
 **************************************************************************************/
 
-#include <math.h>
 #include "img.h"
-#include "usart.h"
-#include "usmart.h"
 
 
-//定义函数要用的变量
-u16 g_lianxushu = 0;
+//定义去除离散点函数要用的变量
+u16 g_lianxushu = 0;		//去除离散点里限制离散点数目
 DPoint visted[20];
 bool lab[4000] = {FALSE};
 
@@ -78,7 +75,7 @@ u16 DeRectLink(RectLink *head)
 void ShowRectLink(RectLink *rlink)
 {
 	u16 i = 0;
-	RectLink *p = rlink;	//绝对注意，不能直接操作rlink
+	RectLink *p = rlink;	//绝对注意，绝对不能直接操作rlink
 
 	printf("接下来打印获得的矩形区域：\n");
 	do
@@ -90,148 +87,13 @@ void ShowRectLink(RectLink *rlink)
 	while(p != NULL);
 	printf("总共%d个矩形\n",i);
 
-	//system("pause");
 }
-//倾斜度矫正,存在问题
-void SlopeAdjust(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth)
-{
-	u16 i,j;
-	u16 i_src;
-	//图像左半边的平均高度
-	double leftaver=0.0;
 
-	//图像右半边的平均高度
-	double rightaver=0.0;
-
-	//图像的倾斜度
-	double slope;
-
-	//统计循环变量
-	u16 counts=0;
-	//u16 x1,x2;
-	//double delta_x;
-	//
-	////从上往下，从左往右，记录下左顶点
-	//for (i = 0; i<srcHeight; i++)
-	//{
-	//	for (j = 0; j<srcWidth; j++)
-	//	{
-	//		if (0 == Src[i][j])		//如果碰到黑点
-	//		{
-	//			x1 = j;		//记录下当前x值，作为左顶点x
-
-	//			j = srcWidth;		//强制赋值以退出循环
-	//			i = srcHeight;
-	//		}
-	//	}
-	//}
-
-	////从下往上，从左往右，记录下左顶点，结合上面得到deltaX
-	//for (i = srcHeight - 1; i>=0; i--)
-	//{
-	//	for (j = 0; j<srcWidth; j++)
-	//	{
-	//		if (0 == Src[i][j])		//如果碰到黑点
-	//		{
-	//			x2 = j;		//记录下当前x值，作为左顶点x
-
-	//			j = srcWidth;		//强制赋值以退出循环
-	//			i = 0;
-	//		}
-	//	}
-	//}
-
-	//delta_x = x2 - x1;		//得到deltaX
-
-
-
-	//扫描左半边的图像，求黑色象素的平均高度
-
-	//行
-	for (i=0;i<srcHeight;i++)
-	{   
-
-		//列
-		for (j=0;j<srcWidth/2;j++)
-		{
-			//如果为黑点
-			if (0 == Src[i][j])
-			{
-
-				//对其高度进行统计叠加
-				counts +=srcWidth/2 -j;
-				leftaver += i*(srcWidth/2 -j);
-
-			}
-
-		}
-	}
-
-	//计算平均高度
-	leftaver /= counts;
-
-	//将统计循环变量重新赋值
-	counts =0;
-
-	//扫描右半边的图像，求黑色象素的平均高度
-
-	//行
-	for (i =0;i<srcHeight;i++)
-	{
-
-		//列
-		for (j=srcWidth/2;j<srcWidth;j++)
-		{
-			//如果为黑点
-			if (0 == Src[i][j])
-			{
-
-				//进行统计叠加
-				counts +=srcWidth -j;
-				rightaver += i*(srcWidth -j);
-			}
-		}
-	}
-
-	//计算右半边的平均高度
-	rightaver /= counts;
-
-	//计算斜率
-	slope = (leftaver - rightaver) / (srcWidth/2);
-
-	//根据斜率，把当前新图像的点映射到源图像的点
-
-	//行
-	for (i=0;i<srcHeight;i++)
-	{
-		//列
-		for (j=0;j<srcWidth;j++)
-		{	
-			//计算映射位置	
-			i_src = (u16)(i - (j-srcWidth/2)*slope);
-
-			//如果点在图像外，象素置白色
-			if (/*i_src <0 ||*/ i_src >=srcHeight )
-			{
-				Dst[i][j] = 1;
-			}
-			else
-			{	
-				//否则到源图像中找点，取得象素值
-
-				//指向第i_src行第j个象素的指针
-				Dst[i][j] = Src[i][j];
-			}
-		}
-	}
-
-}
 
 //粗略分离出字符所在的矩形区域
 DRect DetectRect(u8 **Src, u16 srcHeight, u16 srcWidth)
 {
 	u16 i,j;				//指向Src
-//	u16 k = 0, l = 0;		//指向Dst
 	DRect rect = {0, 0, 0, 0};	//保存矩形
 	u16 minX = srcWidth;
 	u16 maxX = 0;
@@ -243,7 +105,7 @@ DRect DetectRect(u8 **Src, u16 srcHeight, u16 srcWidth)
 	{
 		for (j = 0; j<srcWidth; j++)
 		{
-			if (0 == Src[i][j])		//扫描到黑色点
+			if (FORECOLOR == Src[i][j])		//扫描到“字”
 			{
 				if (i<minY) minY = i;	//各方向求极值，得到矩形边框
 				if (i>maxY) maxY = i;
@@ -291,14 +153,14 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 	//从上往下，从左往右扫描,竖直“切”
 	for(j = 0; j<srcWidth; j++)
 	{
-		allWhite = TRUE;	//假设当前“列”全部为白色像素点
+		allWhite = TRUE;	//假设当前“列”全部为背景色像素点
 		for(i = 0; i<srcHeight; i++)
 		{
 			//找出单个字符的矩形区域
-			if (0 == Src[i][j])		
+			if (FORECOLOR == Src[i][j])		
 			{
 				allWhite = FALSE;
-				if (cutFlag == FALSE)	//如果为黑色像素点 && 切割还没有开始
+				if (cutFlag == FALSE)	//如果为前景色像素点 && 切割还没有开始
 				{
 					cutFlag = TRUE;		//置切割标志位：开始
 					p->data.X1 = j;		//记录开始X值
@@ -333,13 +195,13 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 	{
 		for (i = p->data.Y1; i <= p->data.Y2; i++)
 		{
-			allWhite = TRUE;	//假设当前“行”全部为白色像素点
+			allWhite = TRUE;	//假设当前“行”全部为背景色像素点
 			for (j = p->data.X1; j <= p->data.X2; j++)
 			{
-				if (0 == Src[i][j])
+				if (FORECOLOR == Src[i][j])
 				{
 					allWhite = FALSE;
-					if (cutFlag == FALSE)	//如果为黑色像素点 && 切割还没有开始
+					if (cutFlag == FALSE)	//如果为前景色像素点 && 切割还没有开始
 					{
 						cutFlag = TRUE;		//置切割标志位：开始
 						p->data.Y1 = i;		//记录开始Y值
@@ -459,7 +321,7 @@ u16 TZTQ13(u8 **tz, u8 **Src, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 
 				//水平方向分成2块
 				for (j = p->data.X1 + (a%2)*width/2; j <= p->data.X1-1 + (a%2+1)*width/2; j++)
 				{
-					if (0 == Src[i][j])
+					if (FORECOLOR == Src[i][j])
 					{
 						tz[m][a]++;
 					}
@@ -473,7 +335,7 @@ u16 TZTQ13(u8 **tz, u8 **Src, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 
 		{
 			for (j = p->data.X1; j <= p->data.X2; j++)
 			{
-				if (0 == Src[i][j])
+				if (FORECOLOR == Src[i][j])
 				{
 					tz[m][8]++;
 				}
@@ -484,26 +346,26 @@ u16 TZTQ13(u8 **tz, u8 **Src, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 
 		i = (u16 )(height*1/3.0 );
 		for (j = p->data.X1; j<p->data.X2; j++)
 		{
-			if (0 == Src[i][j]) tz[m][9]++;
+			if (FORECOLOR == Src[i][j]) tz[m][9]++;
 		}
 		
 		i = (u16 )(height*2/3.0 );
 		for (j = p->data.X1; j<p->data.X2; j++)
 		{
-			if (0 == Src[i][j]) tz[m][10]++;
+			if (FORECOLOR == Src[i][j]) tz[m][10]++;
 		}
 
 		//竖直两条
 		 j = (u16 )(width*1/3.0 );
 		 for (i = p->data.Y1; i<p->data.Y2; i++)
 		 {
-			if (0 == Src[i][j]) tz[m][11]++;
+			if (FORECOLOR == Src[i][j]) tz[m][11]++;
 		 }
 
 		 j = (u16 )(width*2/3.0 );
 		 for (i = p->data.Y1; i<p->data.Y2; i++)
 		 {
-			if (0 == Src[i][j]) tz[m][12]++;
+			if (FORECOLOR == Src[i][j]) tz[m][12]++;
 		 }
 
 		 p = p->next;	//准备下一个数字矩形区域
@@ -513,35 +375,8 @@ u16 TZTQ13(u8 **tz, u8 **Src, u16 srcHeight, u16 srcWidth, RectLink *rlink, u16 
 	return 0;
 }
 
-//将特征归一化到0-1之间
-void TZ_Std(double **tzDb,u8 **tz, u16 num, u16 tzCount)
-{
-	u16 i,j;
-	u16 max = 0, min = 1000;
 
-	//预处理，将u8 **tz变成double **tz
-	for (i = 0; i<num; i++)
-	{
-		for (j = 0; j<tzCount; j++)
-		{
-			tzDb[i][j] = (double)tz[i][j];		//强制转换为double型
-			if (tzDb[i][j] > max) max = tzDb[i][j];		//更新最大值、最小值
-			if (tzDb[i][j] < min) min = tzDb[i][j];
-		}
-	}
-
-	//将特征矩阵归一化到0和1之间
-	for (i = 0; i<num; i++)
-	{
-		for (j = 0; j<tzCount; j++)
-		{
-			tzDb[i][j] = (tzDb[i][j] - min + 1 )/(max - min + 1);		//归一化到0和1之间，加1是防止分母为0
-		}
-	}
-}
-
-
-//将图像反相，0变成1,1变成0
+//将图像反相，宏定义CR决定是0-1反相还是0-255反相
 void InvertImg(u8 **Dst, u8 **Src , u16 srcHeight, u16 srcWidth)
 {
 	u16 i, j;
@@ -550,24 +385,15 @@ void InvertImg(u8 **Dst, u8 **Src , u16 srcHeight, u16 srcWidth)
 	{
 		for (j = 0; j<srcWidth; j++)
 		{
-			Dst[i][j] = 0x01 - Src[i][j];		//0-1反相
+			Dst[i][j] = CR - Src[i][j];		//0-1反相
 		}
 	}
 
-	//return 0;
 }
 
 //将图像的像素值全部置为tag
 void SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag)
 {
-	/*u8 *p = (u8 *)&Dst;
-	u16 i = 0;
-
-	while(p[i] != '\0')
-	{
-		p[i] = (u8)tag;
-		i++;
-	}*/
 	u16 i,j;
 
 	for (i = 0; i<srcHeight; i++)
@@ -579,10 +405,9 @@ void SetImg(u8 **Dst, u16 srcHeight, u16 srcWidth, u8 tag)
 
 	}
 
-	//return 0;
 }
 
-//将图像二值化
+//将图像二值化，输入灰度图
 void BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u8 thres)
 {
 	u16 i, j;
@@ -602,8 +427,6 @@ void BinaryImg(u8 **Dst, u8 **Src, u16 srcHeight, u16 srcWidth, u8 thres)
 			}
 		}
 	}
-
-	//return 0;
 }
 
 //全局阈值函数
@@ -660,227 +483,180 @@ u8 GlobalThreshold(u8 **img, u16 height, u16 width)
 	return k1;
 }
 
-//OSTU求图像的阈值
-u8 otsuThreshold(u8 **img, u16 height, u16 width)
+
+//细化图像，用来使特征集中且更明显，要求前景色为1，背景色为0 ,lx:heighe,ly:width
+void ThinnerRosenfeld(u8 **image, u16 lx, u16 ly)
 {
-//	int width = frame->width;
-//	int height = frame->height;
-	u16 pixelCount[256];
-	float pixelPro[256];
-	u16 i, j, pixelSum = width * height, threshold = 0;
-	//遍历灰度级[0,255]
-	float w0, w1, u0tmp, u1tmp, u0, u1, u, deltaTmp, deltaMax = 0;
-	//u8* data = (uchar*)frame->imageData;
+    char *f, *g;
+    char n[10];
+    signed char a[5] = {0, -1, 1, 0, 0};
+    signed char b[5] = {0, 0, 0, 1, -1};
+    char nrnd, cond, n48, n26, n24, n46, n68, n82, n123, n345, n567, n781;
+    short k, shori;
+    unsigned long i, j;
+    long ii, jj, kk, kk1, kk2, kk3, size;
+    size = (long )lx * (long )ly;
 
-	for(i = 0; i < 256; i++)
-	{
-		pixelCount[i] = 0;
-		pixelPro[i] = 0;
-	}
+    g = (char *)malloc(size);
+    if(g==NULL)
+    {
+        printf("error in alocating mmeory!\n");
+        return;
+    }
 
-	//统计灰度级中每个像素在整幅图像中的个数
-	for(i = 0; i < height; i++)
-	{
-		for(j = 0;j < width;j++)
-		{
-			pixelCount[ img[i][j] ]++;
-		}
-	}
-	
-	//计算每个像素在整幅图像中的比例
-	for(i = 0; i < 256; i++)
-	{
-		pixelPro[i] = (float)pixelCount[i] / pixelSum;
-	}
+    f = (char *)image[0];
+    for(kk=0l; kk<size; kk++)
+    {
+        g[kk] = f[kk];
+    }
 
-	for(i = 0; i < 256; i++)
-	{
-		w0 = w1 = u0tmp = u1tmp = u0 = u1 = u = deltaTmp = 0;
-		for(j = 0; j < 256; j++)
-		{
-			if(j <= i)   //背景部分
-			{
-				w0 += pixelPro[j];
-				u0tmp += j * pixelPro[j];
-			}
-			else   //前景部分
-			{
-				w1 += pixelPro[j];
-				u1tmp += j * pixelPro[j];
-			}
-		}
-		u0 = u0tmp / w0;
-		u1 = u1tmp / w1;
-		u = u0tmp + u1tmp;
-		deltaTmp = w0 * pow((u0 - u), 2) + w1 * pow((u1 - u), 2);
-		if(deltaTmp > deltaMax)
-		{
-			deltaMax = deltaTmp;
-			threshold = i;
-		}
-	}
+    do
+    {
+        shori = 0;
+        for(k=1; k<=4; k++)
+        {
+            for(i=1; i<lx-1; i++)
+            {
+                ii = i + a[k];
 
-	return threshold;
+                for(j=1; j<ly-1; j++)
+                {
+                    kk = i*ly + j;
+
+                    if(!f[kk])
+                        continue;
+
+                    jj = j + b[k];
+                    kk1 = ii*ly + jj;
+
+                    if(f[kk1])
+                        continue;
+
+                    kk1 = kk - ly -1;
+                    kk2 = kk1 + 1;
+                    kk3 = kk2 + 1;
+                    n[3] = f[kk1];
+                    n[2] = f[kk2];
+                    n[1] = f[kk3];
+                    kk1 = kk - 1;
+                    kk3 = kk + 1;
+                    n[4] = f[kk1];
+                    n[8] = f[kk3];
+                    kk1 = kk + ly - 1;
+                    kk2 = kk1 + 1;
+                    kk3 = kk2 + 1;
+                    n[5] = f[kk1];
+                    n[6] = f[kk2];
+                    n[7] = f[kk3];
+
+                    nrnd = n[1] + n[2] + n[3] + n[4]
+                        +n[5] + n[6] + n[7] + n[8];
+                    if(nrnd<=1)
+                        continue;
+
+                    cond = 0;
+                    n48 = n[4] + n[8];
+                    n26 = n[2] + n[6];
+                    n24 = n[2] + n[4];
+                    n46 = n[4] + n[6];
+                    n68 = n[6] + n[8];
+                    n82 = n[8] + n[2];
+                    n123 = n[1] + n[2] + n[3];
+                    n345 = n[3] + n[4] + n[5];
+                    n567 = n[5] + n[6] + n[7];
+                    n781 = n[7] + n[8] + n[1];
+
+                    if(n[2]==1 && n48==0 && n567>0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    if(n[6]==1 && n48==0 && n123>0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    if(n[8]==1 && n26==0 && n345>0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    if(n[4]==1 && n26==0 && n781>0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    if(n[5]==1 && n46==0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    if(n[7]==1 && n68==0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    if(n[1]==1 && n82==0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    if(n[3]==1 && n24==0)
+                    {
+                        if(!cond)
+                            continue;
+                        g[kk] = 0;
+                        shori = 1;
+                        continue;
+                    }
+
+                    cond = 1;
+                    if(!cond)
+                        continue;
+                    g[kk] = 0;
+                    shori = 1;
+                }
+            }
+
+            for(i=0; i<lx; i++)
+            {
+                for(j=0; j<ly; j++)
+                {
+                    kk = i*ly + j;
+                    f[kk] = g[kk];
+                }
+            }
+        }
+    }while(shori);
+
+    free(g);
 }
-
-//简单填充，填充黑块周围的白色区域，有可能会产生新的“孔”
-u16 floodfill(u8 **img, u16 height, u16 width)
-{
-	u16 i,j;
-	u16 minX = height, minY = width, maxX = 0, maxY = 0;
-	
-	for (i = 0; i<height; i++)		//求出字符所在的矩形区域，后面仅对矩形区域操作
-	{
-		for (j = 0; j<width; j++)
-		{
-			if (0 == img[i][j])	//如果扫描到黑点
-			{
-				if (j < minX) minX = j;		//更新矩形
-				if (j > maxX) maxX = j;
-				if (i < minY) minY = i;
-				if (i > maxY) maxY = i;
-			}
-		}
-	}
-	
-	for (i = minY; i<=maxY; i++)		//????,??????
-	{
-		for (j = minX; j<=maxX; j++)
-		{
-			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
-			{
-				break;
-			}
-			else
-			{
-				img[i][j] = 0;		//将像素点填充
-			}
-		}
-	}
-	
-	for (i = minX; i<=maxX; i++)		//????,??????
-	{
-		for (j = maxY; j>=minY; j--)
-		{
-			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
-			{
-				break;
-			}
-			else
-			{
-				img[i][j] = 0;		//将像素点填充
-			}
-		}
-	}
-	
-	for (j = minX; j<=maxX; j++)		//????,??????
-	{
-		for (i = minY; i<=maxY; i++)
-		{
-			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
-			{
-				break;
-			}
-			else
-			{
-				img[i][j] = 0;		//将像素点填充
-			}
-		}
-	}
-	
-	for (j = minX; j<=maxX; j++)		//????,??????
-	{
-		for (i = maxY-1; i>=minY; i--)
-		{
-			if (0 == img[i][j])		//如果是黑点，扫描下一行或列
-			{
-				break;
-			}
-			else
-			{
-				img[i][j] = 0;		//将像素点填充
-			}
-		}
-	}
-	
-	return 0;
-}
-
-
-//寻找图像中的孤立像素块
-bool FindBlock(u8 **img, u16 height, u16 width, u16 x, u16 y, bool lab[], DPoint visted[],u16 lianxushu)
-{
-	u16 i,j,count;
-
-	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
-	{
-		return TRUE;
-	}
-	else
-	{
-		g_lianxushu++;			//长度加1
-		lab[y*height+x] = TRUE;				   //置访问标志
-		visted[g_lianxushu - 1].x = x;		   //记录下当前坐标
-		visted[g_lianxushu - 1].y = y;
-	}
-	
-	if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
-	{
-		return TRUE;
-	}
-	else							//进入递归,8方向遍历
-	{
-		if ((x - 1 ) >= 0 && (y - 1 ) >= 0 && (x + 1 ) <= (width - 1 ) && (y + 1 ) < (height - 1 ) )
-		{
-			if (img[x-1][y-1] == 0 && !lab[(y-1)*height+(x-1)])		//左上角
-				FindBlock(img, height, width, x-1, y-1, lab, visted, lianxushu);
-
-			if (img[x][y-1] == 0 && !lab[(y-1)*height+(x)])		//上
-				FindBlock(img, height, width, x, y-1, lab, visted, lianxushu);
-	
-			if (img[x+1][y-1] == 0 && !lab[(y-1)*height+(x+1)])		//右上角
-				FindBlock(img, height, width, x+1, y-1, lab, visted, lianxushu);
-
-			if (img[x-1][y] == 0 && !lab[(y)*height+(x-1)])		//左
-				FindBlock(img, height, width, x-1, y, lab, visted, lianxushu);
-
-			if (img[x-1][y+1] == 0 && !lab[(y+1)*height+(x-1)])		//左下角
-				FindBlock(img, height, width, x-1, y+1, lab, visted, lianxushu);
-
-	
-			if (img[x+1][y] == 0 && !lab[(y)*height+(x+1)])		//右
-				FindBlock(img, height, width, x+1, y, lab, visted, lianxushu);
-	
-	
-			if (img[x][y+1] == 0 && !lab[(y+1)*height+(x)])		//下
-				FindBlock(img, height, width, x, y+1, lab, visted, lianxushu);
-	
-			if (img[x+1][y+1] == 0 && !lab[(y+1)*height+(x+1)])		//右下角
-				FindBlock(img, height, width, x+1, y+1, lab, visted, lianxushu);
-
-		}
-		else
-		{
-			return TRUE;	
-		}
-
-		if(g_lianxushu >= lianxushu)	//如果连续长度满足要求，返回
-		{
-			return TRUE;
-		} 
-	}
-
-	return FALSE;
-}
-
-//删除孤立像素点
-//void RemoveSeprateBlock(u8 **img, DPoint visted[])
-//{
-//	  u16 i,j;
-//
-//
-//}
-
-
-
 

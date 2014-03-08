@@ -6,36 +6,19 @@
 **************************************************************************************/
 
 #include "memmgr.h"
-#include "base.h"
-#include "lcd.h"
 
 //申请2维uchar内存
 u8 **alloc_mem2d_u8( u16 height, u16 width)
 {
 	u16 i;
 	u8 **p = NULL;
-
-	//LCD_ShowString(40,50,200,200,16,"start malloc...");
-
 	
 	p = (u8 **)malloc(sizeof(u8 *)*height);
 
-	//LCD_ShowString(40,50,200,200,16,"first malloc ok...");
 	for (i = 0; i<height; i++)
 	{
 		p[i] = (u8 *)malloc(sizeof(u8 )*width);
 	}
-
-//测试用
-//	for (i = 0; i<height; i++)
-//	{
-//		for (j = 0; j<width; j++)
-//		{
-//			p[i][j] = 0xff;
-//		}
-//	}
-
-	//LCD_ShowString(40,50,200,200,16,"malloc...");
 
 	if (p == NULL) 
 	{
@@ -61,7 +44,7 @@ void delete_mem2d_u8( u8 **img, u16 height, u16 width)
 }
 
 //分配2维double数组内存
-double **allloc_mem2d_dbl(u16 height, u16 width)
+double **alloc_mem2d_dbl(u16 height, u16 width)
 {
 	u16 i,j;
 
@@ -85,7 +68,7 @@ double **allloc_mem2d_dbl(u16 height, u16 width)
 }
 
 //释放2维double数组内存
-void **detect_mem2d_dbl(double **mem, u16 height, u16 width)
+void delete_mem2d_dbl(double **mem, u16 height, u16 width)
 {
 	u16 i = 0;
 
@@ -95,6 +78,5 @@ void **detect_mem2d_dbl(double **mem, u16 height, u16 width)
 	}
 	free(mem);
 
-	return 0;
 }
 
