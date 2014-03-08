@@ -92,11 +92,11 @@ int main(void)
 	
 		LCD_ShowString(40,50,200,200,16,"Will Continue...");
 	
-		thres  = GlobalThreshold(img, IMG_H, IMG_W)>>1;		//经验值，阈值的1/2分离较好
+		thres  = GlobalThreshold(img, IMG_H, IMG_W);		//经验值，阈值的1/2分离较好
 		printf("galobal thres:%d\r\n", thres);
 
 		img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 0);  //显示在屏幕中间，灰度图0：原样显示
-//		print2serial(img, IMG_H, IMG_W);				   //输出灰度图到串口，测试用
+		print2serial(img, IMG_H, IMG_W);				   //输出灰度图到串口，测试用
 	
 		//wait();
 	
@@ -104,6 +104,7 @@ int main(void)
 		ImageHandle(tz, img, IMG_H, IMG_W, NUM);
 		//while(KEY1 == 0);
 		//goto back;
+		LCD_ShowString(40,50,200,200,16,"ImageHandle End!");
 
 		//开始识别
 		Recognize(result, tz, NUM, TZ);
@@ -223,7 +224,7 @@ void camera_refresh(u8 **img, u16 yScale, u16 xScale)
 						
 				color= color_y + color_u + color_v;  		//显示
 								 	 
-				if (j != 319)	   //测试发现第319行全是白色的，不知道怎么回事，所以就不要了，用318行的代替
+				if (j != 319 && i != 239)	   //测试发现第319行全是白色的，不知道怎么回事，所以就不要了，用318行的代替
 				{
 					img[i/yScale][j/xScale] = color_gray;	//送到图像数组，上到下，左到右存储
 				}
@@ -249,8 +250,9 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 {
 	u16 i,j;
 	u16 color;
+	u8 temp;
 
-//	LCD_Fill( 0, 0, 239, 319,WHITE);		//sxy,exy
+	LCD_Fill( 0, 0, 239, 319,WHITE);		//sxy,exy
 	//LCD_Scan_Dir(U2D_L2R);		//从上到下,从左到右
 	LCD_Scan_Dir(DFT_SCAN_DIR);	//恢复默认扫描方向,从左到右，从上到下 
 	
@@ -296,22 +298,44 @@ void img_display(u8 **img, u16 height, u16 width, u16 x, u16 y, u8 mode)
 	{
 		for (i = 0; i<height; i++)
 		{
-			for (j = 0; j<width; j++)	   //灰度图二值化显示
+			LCD_SetCursor(x, y+i);	//设置光标位置 
+			LCD_WriteRAM_Prepare();     //开始写入GRAM
+	
+			for (j = 0; j<width; j++)	   //原图缩小显示
 			{
-				color = (img[i][j]>thres)?0xffff:0x0;
+				temp = (img[i][j]>thres)?0xffff:0x0;
+
+				//将gray复制三份给RGB565，低位舍掉
+				color = temp>>3;		//移掉三位，给R,6位
+				color <<= 6;				//空出6位，存G
+				color |= temp>>2;		//6
+				color <<=5;
+				color |= temp>>3;		//5
+
 	
 				LCD_WR_DATA(color);
 			}
 		}
+	
 	}
 	else
 	if (mode == 2)
 	{
 		for (i = 0; i<height; i++)
 		{
-			for (j = 0; j<width; j++)	   //二值图二值化显示
+			LCD_SetCursor(x, y+i);	//设置光标位置 
+			LCD_WriteRAM_Prepare();     //开始写入GRAM
+	
+			for (j = 0; j<width; j++)	   //原图缩小显示
 			{
-				color = img[i][j]?0xffff:0x0;
+				temp = img[i][j]?0xffff:0x0;
+
+				//将gray复制三份给RGB565，低位舍掉
+				color = temp>>3;		//移掉三位，给R,6位
+				color <<= 6;				//空出6位，存G
+				color |= temp>>2;		//6
+				color <<=5;
+				color |= temp>>3;		//5
 	
 				LCD_WR_DATA(color);
 			}
@@ -368,34 +392,51 @@ u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
 	//SlopeAdjust(img, img, srcHeight, srcWidth);
 
 	//细化图像
-	ThinnerRosenfeld(img, srcHeight, srcWidth);
+	//ThinnerRosenfeld(img, srcHeight, srcWidth);
+	//LCD_ShowString(40,50,200,200,16,"Thinnner end.");
+	//img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 2);
 
 	//分离出字符所在的矩形区域
 	srcRect = DetectRect(img, srcHeight, srcWidth);
+	LCD_ShowString(40,50,200,200,16,"DetectRect end.");
 
 	//计算矩形区域长宽
 	h = srcRect.Y2 - srcRect.Y1 + 1;
 	w = srcRect.X2 - srcRect.X1 + 1;
-	dstRect.X2 = w;
-	dstRect.Y2 = h;
+	printf("srcRect{%d,%d,%d,%d}\r\n",srcRect.X1,srcRect.Y1,srcRect.X2,srcRect.Y2);
+	printf("h:%d,w:%d\r\n",h,w);
+	dstRect.X2 = w-1; 		//记住坐标都要比长宽少1
+	dstRect.Y2 = h-1;
 	img1 = alloc_mem2d_u8(h, w);			//用来存分离出的字符矩形区域，根据分离出的矩形大小确定
+	LCD_ShowString(40,50,200,200,16,"anchor (1). end");
+	printf("dstRect{%d,%d,%d,%d}\r\n",dstRect.X1,dstRect.Y1,dstRect.X2,dstRect.Y2);
+
 	//拷贝得到的矩形区域给img1
-	CopyImg(img1, img, dstRect, srcRect);		
+	CopyImg(img1, img, dstRect, srcRect);
+	img_display(img1, h, w, (LCD_W-w)/2-1, (LCD_H-h)/2-1, 2);
+	LCD_ShowString(40,50,200,200,16,"Copy end ...");
+	print2serial(img1, h, w);		
 
 	//分离出单个字符所在的矩形区域,rlink保存
 	DetectNum(img1, h, w, rlink, num);
+	LCD_ShowString(40,50,200,200,16,"anchor (2). end");
 
 	//输出获得的矩形链表到串口，测试用
 	ShowRectLink(rlink);	
 	
 	//紧缩重排，字符尺寸归一化
 	StdAlignImg(alignImg, img1, STD_H, num*STD_W, h, w, rlink, num);
+	img_display(alignImg, STD_H, num*STD_W, (LCD_W-num*STD_W)/2-1, (LCD_H-STD_H)/2-1, 2);
+	LCD_ShowString(40,50,200,200,16,"anchor (3). end");
 	
 	//输出获得的矩形链表到串口，测试用
+	printf("归一化之后的矩形：\r\n");
 	ShowRectLink(rlink);	//显示尺寸归一化之后的矩形链表
 	
 	//特征提取
 	TZTQ13(tz, alignImg, STD_H, num*STD_W, rlink, num);		   //13点特征
+	print2serial(tz, num, 13);
+	LCD_ShowString(40,50,200,200,16,"anchor (4). end");
 
 	//释放内存
 	delete_mem2d_u8(alignImg, STD_H, num*STD_W);

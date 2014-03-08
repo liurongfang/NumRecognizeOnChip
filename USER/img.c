@@ -77,15 +77,15 @@ void ShowRectLink(RectLink *rlink)
 	u16 i = 0;
 	RectLink *p = rlink;	//绝对注意，绝对不能直接操作rlink
 
-	printf("接下来打印获得的矩形区域：\n");
+	printf("接下来打印获得的矩形区域：\r\n");
 	do
 	{
-		printf("第%d个矩形：{%d %d %d %d}\n",i,p->data.X1,p->data.Y1,p->data.X2,p->data.Y2);
+		printf("第%d个矩形：{%d,%d,%d,%d}\r\n",i,p->data.X1,p->data.Y1,p->data.X2,p->data.Y2);
 		i++;
 		p = p->next;
 	}
 	while(p != NULL);
-	printf("总共%d个矩形\n",i);
+	printf("总共%d个矩形\r\n",i);
 
 }
 
@@ -144,10 +144,9 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 	DRect rect = {0, 0, 0, 0};
 
 	RectLink *p = rectlink;		//用来指向rectlink表
+	rect.Y2 = srcHeight;
 	InitRectLink(p, rect);		//用rect初始化rectLink
 	p = rectlink;
-
-	rect.Y2 = srcHeight;
 
 
 	//从上往下，从左往右扫描,竖直“切”
@@ -172,7 +171,7 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 			}
 		}
 
-		if (allWhite && cutFlag)		//如果当前列全部为白色像素点，并且切割已经开始
+		if (allWhite && cutFlag /*&& (j-p->data.X1)>2*/)		//如果当前列全部为白色像素点，并且切割已经开始，宽度大于2
 		{
 			cutFlag = FALSE;		//切割结束
 			p->data.X2 = j-1;		//记录结束X坐标
@@ -188,10 +187,13 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 		
 	}
 
+//	ShowRectLink(rectlink);
+//	printf("Pause\r\n");
+
 	//下面细化数字区域
 	p = rectlink;		//p指针复位到rectlink头
 	count = 0;
-	for (; count < num; p = p->next)			//准备下一个链表来存放数据，最后一个p = NULL
+	for (; count < num && p->next != NULL; p = p->next)			//准备下一个链表来存放数据，最后一个p = NULL
 	{
 		for (i = p->data.Y1; i <= p->data.Y2; i++)
 		{
@@ -222,9 +224,15 @@ void DetectNum(u8 **Src, u16 srcHeight, u16 srcWidth , RectLink *rectlink, u16 n
 				count++;			//切割个数加1
 			}
 
+//			printf("Rect{%d,%d,%d,%d}\r\n",p->data.X1,p->data.Y1,p->data.X2,p->data.Y2);
+//			printf("count:%dcheck\r\n",count);
+
 		}//列循环结束
 
 	}//数字循环结束
+
+	printf("End\r\n");
+	ShowRectLink(rectlink);
 
 }
 

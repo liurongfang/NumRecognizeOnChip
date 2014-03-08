@@ -39,41 +39,46 @@ void Recognize(u8 *result, u8 **tz, u16 num, u16 tzCount)
 {
 	u16 i,j,k;
 	u8 good;		//保存识别结果,result[num]
-	double min = 1000000.0;		  //表示无穷大
-	double s[5];	//保存测度的距离
-	double **tzDb = NULL;
-	const double model[5][13] = {	{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
-									{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
-									{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
-									{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
-									{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0}
+	long min = 0xffffffff;		  //表示无穷大
+	long s[10];	//保存测度的距离，与10个数字之间
+	//double **tzDb = NULL;
+	const u8 model[10][13] = {	{0},	//0
+								{0},	//1
+								{0},	//2
+								{0},	//3
+								{0},	//4
+								{0},	//5
+								{0},	//6
+								{0},	//7
+								{3,2,10,12,10,8,4,2,51,5,3,7,14},	 //8
+								{11,9,12,12,8,12,7,7,78,5,3,7,14} 	 //9
 								};//标准特征矩阵
 
-	tzDb = alloc_mem2d_dbl(num, tzCount);
+	//tzDb = alloc_mem2d_dbl(num, tzCount);
 
 	//将特征归一化
-	TZ_Std(tzDb, tz, num, tzCount);
+	//TZ_Std(tzDb, tz, num, tzCount);
 
 	//对待识别的num个数字
 	for (k = 0; k<num; k++)
 	{
 		//清零
 		//for (j = 0; j<num; j++) s[j] = 0;
-		min = 1000000.0;	
+		min = 0xffffffff;	
 
-		//循环与num个模板做差
-		for (i = 0; i<num; i++)
+		//循环与10个模板做差
+		for (i = 0; i<10; i++)
 		{
-			for (j = 0; j<num; j++) s[j] = 0;
+			for (j = 0; j<10; j++) s[j] = 0;
 
 			for (j = 0; j<tzCount; j++)
 			{
-				s[i] += pow((tzDb[k][j] - model[i][j] ), 2);	//曼哈顿距离或者欧氏距离
+				s[i] += pow((tz[k][j] - model[i][j] ), 2);	//曼哈顿距离或者欧氏距离
 			}
 		}
 
 		//寻找最好的作为结果
-		for (i = 0; i<num; i++)
+		for (i = 0; i<10; i++)
 		{
 			if (s[i] < min)
 			{
@@ -86,7 +91,7 @@ void Recognize(u8 *result, u8 **tz, u16 num, u16 tzCount)
 	}
 	result[num] = '\0';		//置结束符
 
-	delete_mem2d_dbl(tzDb, num, tzCount);
+	//delete_mem2d_dbl(tzDb, num, tzCount);
 
 	//return result;
 }
