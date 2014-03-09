@@ -96,7 +96,7 @@ int main(void)
 		printf("galobal thres:%d\r\n", thres);
 
 		img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 0);  //显示在屏幕中间，灰度图0：原样显示
-		print2serial(img, IMG_H, IMG_W);				   //输出灰度图到串口，测试用
+		//print2serial(img, IMG_H, IMG_W);				   //输出灰度图到串口，测试用
 	
 		//wait();
 	
@@ -114,10 +114,12 @@ int main(void)
 		POINT_COLOR = BLUE;		//设置提示信息为蓝色
 		LCD_ShowString(40,50,200,200,16,"Is Recognize...");
 		LCD_ShowString(40,90,200,200,16,"Recognize Result:");
-		LCD_ShowString(40,120,200,200,16,result);
+		for (i = 0; i<NUM; i++)	printf("\r\n%c",result[i]);
+		LCD_ShowString(40,110,200,200,16,result);
 
 		wait();
-		LCD_Fill(1,1,239,319,WHITE);
+		wait();
+		//LCD_Fill(1,1,239,319,WHITE);
 	
 		//释放内存
 		delete_mem2d_u8( img,IMG_H, IMG_W);
@@ -428,6 +430,7 @@ u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
 	StdAlignImg(alignImg, img1, STD_H, num*STD_W, h, w, rlink, num);
 	img_display(alignImg, STD_H, num*STD_W, (LCD_W-num*STD_W)/2-1, (LCD_H-STD_H)/2-1, 2);
 	LCD_ShowString(40,50,200,200,16,"anchor (3). end");
+	print2serial(alignImg, STD_H, num*STD_W);
 	
 	//输出获得的矩形链表到串口，测试用
 	printf("归一化之后的矩形：\r\n");
