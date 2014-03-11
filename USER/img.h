@@ -121,5 +121,15 @@ u16 floodfill(u8 **img, u16 height, u16 width);
 //输入：image 图像数组，lx 图像高度，ly 图像宽度
 void ThinnerRosenfeld(u8 **image, u16 lx, u16 ly);
 
+
+//去除图像中连续长度少于length的孤立块
+void RemoveNoise(u8 **img, u16 height, u16 width, u16 length);
+
+//判断当前点的离散性
+bool FindNoise(u8 **img, u16 height, u16 width,u16 x, u16 y, bool *lab, DPoint *save, u16 length);
+
+//直方图均衡
+void Equalize(u8 **img, u16 height, u16 width);
+
 #endif
 

@@ -10,8 +10,8 @@
 
 //定义去除离散点函数要用的变量
 u16 g_lianxushu = 0;		//去除离散点里限制离散点数目
-DPoint visted[20];
-bool lab[4000] = {FALSE};
+//DPoint visted[20];
+//bool lab[4000] = {FALSE};
 
 
 //创建矩形链表
@@ -244,7 +244,7 @@ u16 StdAlignImg(u8 **Dst, u8 **Src, u16 dstHeight, u16 dstWidth, u16 srcHeight, 
 	DRect srcRect = {0, 0, 0, 0};		//源图像中的矩形区域
 	DRect dstRect = {0, 0, (STD_W - 1), (STD_H - 1)};		//目标图像中的矩形区域，初始化,8x16宽高
 
-	SetImg(Dst, dstHeight, dstWidth, 1);		//将dst全部填充为白色
+	SetImg(Dst, dstHeight, dstWidth, 0);		//将dst全部填充为白色
 
 	for (m = 0; m<num; m++)
 	{
@@ -666,5 +666,214 @@ void ThinnerRosenfeld(u8 **image, u16 lx, u16 ly)
     }while(shori);
 
     free(g);
+}
+
+//去除图像中连续长度少于length的孤立块
+void RemoveNoise(u8 **img, u16 height, u16 width, u16 length)
+{
+	u16 i,j,k;
+	DPoint save[40];		//保存要删除的点，删除时使用，查找时更新，删除后清除
+	bool lab[60*80] = {FALSE};	//保存某点是否被访问过，只在查找时使用
+
+	LCD_ShowString(40,50,200,200,16,"Noise anchor (1).");
+
+	//将访问表清零
+	for (i = 0; i<60*80; i++) lab[i] = FALSE;
+
+	//开始循环遍历
+	for (i = 0; i<height; i++)
+	{
+		for (j = 0; j<width; j++)
+		{
+			//将保存的点坐标置0
+			g_lianxushu = 0;
+
+			//如果是前景色，查找是否是噪点(是否添加到访问表)
+			if (img[i][j] == FORECOLOR)
+			{
+				//如果找到了没有访问过的孤立块，开
+				//始根据获得的坐标将点置为背景色
+				if (FindNoise(img, height, width, i, j, lab, save, length))	//== TRUE
+				{
+					//去除孤立像素块
+					//RemoveIt();
+					
+					for (k = 0; k<g_lianxushu; k++)
+					{
+						img[save[k].y][save[k].x] = BACKCOLOR;
+					}	
+				}
+				else
+				{
+					g_lianxushu = 0;		//将噪点计数器清零
+				}
+
+			}//else donothing
+			else
+			{
+				//printf("g%d-%d ",i,j);
+			}
+			printf("%d.%d ",i,j);
+		}
+	}
+
+}
+
+
+//判断当前点的离散性
+bool FindNoise(u8 **img, u16 height, u16 width,u16 x, u16 y, bool *lab, DPoint *save, u16 length)
+{
+//	u16 i,j;
+
+	if(g_lianxushu >= length)	//连续长度大于最大长度，不是离散块，返回FALSE
+	{
+		return FALSE;
+	}
+	else
+	{
+		g_lianxushu++;			//连续长度加1
+		lab[y*width+x] = TRUE;				   //更新访问表
+		save[g_lianxushu - 1].x = x;		   //可以认为当前点是离散点
+		save[g_lianxushu - 1].y = y;
+	}
+	
+	if(g_lianxushu >= length)	//连续长度
+	{
+		return FALSE;
+	}
+	else							//????,8????
+	{
+		if ((x - 1 ) >= 0 && (y - 1 ) >= 0 && (x + 1 ) <= (width - 1 ) && (y + 1 ) < (height - 1 ) )
+		{
+			if (img[x-1][y-1] == 0 && !lab[(y-1)*width+(x-1)])		//左上
+				FindNoise(img, height, width, x-1, y-1, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+
+			if (img[x][y-1] == 0 && !lab[(y-1)*width+(x)])		//上
+				FindNoise(img, height, width, x, y-1, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+	
+			if (img[x+1][y-1] == 0 && !lab[(y-1)*width+(x+1)])		//右上
+				FindNoise(img, height, width, x+1, y-1, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+
+			if (img[x-1][y] == 0 && !lab[(y)*width+(x-1)])		//左
+				FindNoise(img, height, width, x-1, y, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+
+			if (img[x-1][y+1] == 0 && !lab[(y+1)*width+(x-1)])		//左下
+				FindNoise(img, height, width, x-1, y+1, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+
+	
+			if (img[x+1][y] == 0 && !lab[(y)*width+(x+1)])		//右
+				FindNoise(img, height, width, x+1, y, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+	
+	
+			if (img[x][y+1] == 0 && !lab[(y+1)*width+(x)])		//下
+				FindNoise(img, height, width, x, y+1, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+	
+			if (img[x+1][y+1] == 0 && !lab[(y+1)*width+(x+1)])		//右下
+				FindNoise(img, height, width, x+1, y+1, lab, save, length);
+			if(g_lianxushu >= length)	//不是离散点
+			{
+				return FALSE;
+			}
+
+		}
+		else
+		{
+			//doNothing	
+		}
+
+		if(g_lianxushu >= length)	//不是离散点
+		{
+			return FALSE;
+		} 
+	}
+
+	return TRUE;
+}
+
+
+//直方图均衡
+void Equalize(u8 **img, u16 height, u16 width)
+{
+	//循环变量
+	u16	i,j;
+	
+	//临时变量
+	u16	lTemp;	
+	
+	
+	//映射表
+	u16	bMap[256];
+	
+	//直方图
+	long	lCount[256];
+	
+	//清零直方图
+	for (i = 0; i < 256; i ++)
+	{
+		lCount[i] = 0;
+	}
+	
+	//直方图统计
+	for (i = 0; i < height; i ++)
+	{
+		for (j = 0; j < width; j ++)
+		{
+			lCount[img[i][j] ]++;
+		}
+	}
+	
+	//计算灰度映射表
+	for (i = 0; i < 256; i++)
+	{
+		lTemp = 0;
+		
+		for (j = 0; j <= i ; j++)
+		{
+			lTemp += lCount[j];
+		}
+		
+		//计算映射表
+		bMap[i] = (u16) (lTemp * 255 / height / width);
+	}
+	
+	//根据映射表填充图像
+	for(i = 0; i < height; i++)
+	{
+		for(j = 0; j < width; j++)
+		{
+			//
+			img[height - 1 - i][j] = bMap[(height - 1 - i)*width + j];
+		}
+	}
+	
+	
 }
 

@@ -114,8 +114,9 @@ int main(void)
 		POINT_COLOR = BLUE;		//设置提示信息为蓝色
 		LCD_ShowString(40,50,200,200,16,"Is Recognize...");
 		LCD_ShowString(40,90,200,200,16,"Recognize Result:");
-		for (i = 0; i<NUM; i++)	printf("\r\n%c",result[i]);
+		//for (i = 0; i<NUM; i++)	printf("\r\n%c",result[i]);
 		LCD_ShowString(40,110,200,200,16,result);
+		printf("\r\n\r\n>>Recognize Result:\r\n%s",result);
 
 		wait();
 		wait();
@@ -363,6 +364,7 @@ void print2serial(u8 **img, u16 height, u16 width)
 		}
 		printf("\r\n");
 	}
+	printf("\r\n");
 }
 
 //在这里完成图像处理的相关操作，传入图像为灰度图,白字黑背景
@@ -384,11 +386,14 @@ u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
 	//InvertImg(img, img , srcHeight, srcWidth);				//选用反相，变成前景白色，背景黑色
 
 	//输出，测试用
-	LCD_ShowString(40,50,200,200,16,"In ImageHandle().");
-	img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 2);	
+	img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 2);
+	LCD_ShowString(40,50,200,200,16,"In ImageHandle().");	
 	print2serial(img, srcHeight, srcWidth);
 
-	//去除小块的噪声
+//	//去除小块的噪声
+//	RemoveNoise(img, IMG_H, IMG_W, 2);
+//	img_display(img, IMG_H, IMG_W, (LCD_W-IMG_W)/2-1, (LCD_H-IMG_H)/2-1, 2);
+//	LCD_ShowString(40,50,200,200,16,"Has Remove Noise.");
 	
 	//倾斜度矫正
 	//SlopeAdjust(img, img, srcHeight, srcWidth);
@@ -416,12 +421,17 @@ u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
 	//拷贝得到的矩形区域给img1
 	CopyImg(img1, img, dstRect, srcRect);
 	img_display(img1, h, w, (LCD_W-w)/2-1, (LCD_H-h)/2-1, 2);
-	LCD_ShowString(40,50,200,200,16,"Copy end ...");
-	print2serial(img1, h, w);		
+	LCD_ShowString(40,50,200,200,16,"DetectRect & Copy.");
+	print2serial(img1, h, w);
+	
+	//去除小块的噪声
+//	RemoveNoise(img1, h, w, 2);
+//	img_display(img1, h, w, (LCD_W-w)/2-1, (LCD_H-h)/2-1, 4);
+//	LCD_ShowString(40,50,200,200,16,"Has Remove Noise.");		
 
 	//分离出单个字符所在的矩形区域,rlink保存
 	DetectNum(img1, h, w, rlink, num);
-	LCD_ShowString(40,50,200,200,16,"anchor (2). end");
+	LCD_ShowString(40,50,200,200,16,"anchor (2).DetectNum end");
 
 	//输出获得的矩形链表到串口，测试用
 	ShowRectLink(rlink);	
@@ -429,7 +439,7 @@ u16 ImageHandle(u8 **tz, u8 **img, u16 srcHeight, u16 srcWidth, u16 num)
 	//紧缩重排，字符尺寸归一化
 	StdAlignImg(alignImg, img1, STD_H, num*STD_W, h, w, rlink, num);
 	img_display(alignImg, STD_H, num*STD_W, (LCD_W-num*STD_W)/2-1, (LCD_H-STD_H)/2-1, 2);
-	LCD_ShowString(40,50,200,200,16,"anchor (3). end");
+	LCD_ShowString(40,50,200,200,16,"anchor (3).Align end");
 	print2serial(alignImg, STD_H, num*STD_W);
 	
 	//输出获得的矩形链表到串口，测试用

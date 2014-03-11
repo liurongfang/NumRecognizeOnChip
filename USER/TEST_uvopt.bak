@@ -222,10 +222,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>20</ColumnNumber>
+      <ColumnNumber>25</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>1</TopLine>
-      <CurrentLine>8</CurrentLine>
+      <TopLine>79</TopLine>
+      <CurrentLine>95</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\main.c</PathWithFileName>
       <FilenameWithoutPath>main.c</FilenameWithoutPath>
@@ -236,10 +236,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>36</ColumnNumber>
+      <ColumnNumber>107</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>482</TopLine>
-      <CurrentLine>498</CurrentLine>
+      <TopLine>298</TopLine>
+      <CurrentLine>309</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\img.c</PathWithFileName>
       <FilenameWithoutPath>img.c</FilenameWithoutPath>
@@ -264,10 +264,10 @@
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <Focus>0</Focus>
-      <ColumnNumber>17</ColumnNumber>
+      <ColumnNumber>65</ColumnNumber>
       <tvExpOptDlg>0</tvExpOptDlg>
-      <TopLine>29</TopLine>
-      <CurrentLine>38</CurrentLine>
+      <TopLine>7</TopLine>
+      <CurrentLine>7</CurrentLine>
       <bDave2>0</bDave2>
       <PathWithFileName>.\recog.c</PathWithFileName>
       <FilenameWithoutPath>recog.c</FilenameWithoutPath>
@@ -571,8 +571,8 @@
     <MDIClientArea>
       <RegID>0</RegID>
       <MDITabState>
-        <Len>284</Len>
-        <Data>01000000040000000100000001000000010000000100000001000000FFFFFFFF0000000001000000010000000000000028000000280000000100000002000000010000000100000021453A5C53544D33325C4E756D5265636F676E697A655C555345525C6D61696E2E6300000000066D61696E2E6300000000FFDC7800FFFFFFFF20453A5C53544D33325C4E756D5265636F676E697A655C555345525C696D672E630000000005696D672E6300000000BCA8E100FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD500010000000100000002000000C40000006500000056050000D7020000</Data>
+        <Len>343</Len>
+        <Data>01000000040000000100000001000000010000000100000001000000FFFFFFFF0000000001000000010000000000000028000000280000000100000003000000020000000100000022453A5C53544D33325C4E756D5265636F676E697A655C555345525C7265636F672E6300000000077265636F672E6300000000C5D4F200FFFFFFFF21453A5C53544D33325C4E756D5265636F676E697A655C555345525C6D61696E2E6300000000066D61696E2E6300000000FFDC7800FFFFFFFF20453A5C53544D33325C4E756D5265636F676E697A655C555345525C696D672E630000000005696D672E6300000000BECEA100FFFFFFFF0100000010000000C5D4F200FFDC7800BECEA100F0A0A100BCA8E1009CC1B600F7B88600D9ADC200A5C2D700B3A6BE00EAD6A300F6FA7D00B5E99D005FC3CF00C1838300CACAD500010000000100000002000000C40000006500000056050000D7020000</Data>
       </MDITabState>
     </MDIClientArea>
     <ViewEx>
@@ -3064,19 +3064,25 @@
     <ActiveMDIGroup>0</ActiveMDIGroup>
     <MDIGroup>
       <Size>100</Size>
-      <ActiveTab>1</ActiveTab>
+      <ActiveTab>2</ActiveTab>
       <Documents>
         <Doc>
+          <Name>.\recog.c</Name>
+          <ColumnNumber>65</ColumnNumber>
+          <TopLine>7</TopLine>
+          <CurrentLine>7</CurrentLine>
+        </Doc>
+        <Doc>
           <Name>.\main.c</Name>
-          <ColumnNumber>20</ColumnNumber>
-          <TopLine>1</TopLine>
-          <CurrentLine>8</CurrentLine>
+          <ColumnNumber>25</ColumnNumber>
+          <TopLine>79</TopLine>
+          <CurrentLine>95</CurrentLine>
         </Doc>
         <Doc>
           <Name>.\img.c</Name>
-          <ColumnNumber>36</ColumnNumber>
-          <TopLine>482</TopLine>
-          <CurrentLine>498</CurrentLine>
+          <ColumnNumber>107</ColumnNumber>
+          <TopLine>298</TopLine>
+          <CurrentLine>309</CurrentLine>
         </Doc>
       </Documents>
     </MDIGroup>
